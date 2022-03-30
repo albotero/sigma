@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS Sigma;
-USE Sigma;
+CREATE DATABASE IF NOT EXISTS sigma;
+USE sigma;
 
 CREATE TABLE IF NOT EXISTS Pacientes (
     Tipo_ID varchar(4),
