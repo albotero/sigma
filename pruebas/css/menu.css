@@ -1,0 +1,243 @@
+#menuboton {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 25pt;
+    height: 25pt;
+    cursor: pointer;
+    z-index: 2000;
+}
+
+#menuboton .barra,
+#menuboton .barra::before,
+#menuboton .barra::after {
+    background-color: var(--color-menu-letra);
+    display: block;
+    content: '';
+    height: 1.5pt;
+    position: absolute;
+    transition: background ease .3s, top ease .3s .3s, transform ease .3s;
+}
+
+#menuboton:hover .barra,
+#menuboton:hover .barra::before,
+#menuboton:hover .barra::after {
+    background-color: var(--color-menu-resaltar);
+}
+
+#menuboton .barra {
+    width: 50%;
+    left: 25%;
+    top: calc(50% - 1pt);
+    border-radius: 1pt;
+}
+
+#menuboton .barra::before {
+    width: 100%;
+    top: -5pt;
+}
+
+#menuboton .barra::after {
+    width: 100%;
+    top: 5pt;
+}
+
+#menuboton.change .barra {
+    background: transparent;
+}
+
+#menuboton.change .barra::before {
+    transform: rotate(45deg);
+}
+
+#menuboton.change .barra::after {
+    transform: rotate(-45deg);
+}
+
+#menuboton.change .barra::before,
+#menuboton.change .barra::after {
+    top: 0;
+    transition: top ease .3s, transform ease .3s .3s;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 25pt;
+    width: 100%;
+    background-color: var(--color-menu-fondo-grad2);
+    background: linear-gradient(-90deg, var(--color-menu-fondo-grad1), var(--color-menu-fondo-grad2));
+    box-shadow: 2px 2px var(--color-sombra);
+    transition: height ease .6s;
+    z-index: 1000;
+    text-align: center;
+}
+
+ul.contenedor {
+    width: fit-content;
+    height: 100%;
+    margin: 0;
+    display: inline-flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+ul.contenedor li {
+    cursor: pointer;
+}
+
+ul.contenedor ul {
+    position: absolute;
+    top: 100%;
+    left: inherit;
+    background: var(--color-menu-fondo-grad2);
+    padding: 0;
+    box-shadow: 2px 2px var(--color-sombra);
+    opacity: 0; 
+    height: 0;
+    overflow: hidden;
+    transition: opacity .7s ease;
+    border-radius: 0 0 5pt 5pt;
+}
+
+ul.contenedor li:hover > ul {
+    height: auto;
+    opacity: 1;
+}
+
+ul.contenedor ul li {
+    position: relative;
+    float: top;
+    background: linear-gradient(to left, var(--color-menu-fondo-grad1), var(--color-menu-fondo-grad2));
+    list-style: none;
+    margin: 0;
+    padding: 9pt 15pt;
+    text-align: left;
+}
+
+ul.contenedor ul li:nth-child(n+2) {
+    border-top: solid 1px var(--color-menu-separador-grad1);    
+}
+
+ul.contenedor ul li:hover {
+    background-image: linear-gradient(to bottom,var(--color-menu-resaltar-grad1), var(--color-menu-resaltar-grad2));
+    color: var(--color-letra-titulos);
+}
+
+.menuseparador {
+    width: 2pt;
+    height: calc(100% - 6pt);
+    margin: 3pt;
+    border-radius: 1pt;
+    background-color: var(--color-menu-separador-grad2);
+    background: linear-gradient(-90deg, var(--color-menu-separador-grad1), var(--color-menu-separador-grad2));
+}
+
+.menuitem {
+    font-size: 10pt;
+    color: var(--color-menu-letra);
+    margin: 1pt 4pt -1pt 4pt;
+    padding: 1.5pt 1pt 0pt 1pt;
+    transition: all ease .6s;
+}
+
+ul.contenedor li img {
+    filter: var(--color-menu-filtro-normal);
+}
+
+ul.contenedor li:hover {
+    background: linear-gradient(to bottom, var(--color-menu-hover-grad1), var(--color-menu-hover-grad2));
+}
+
+ul.contenedor li:hover img {
+    filter: var(--color-menu-filtro-highlight);
+}
+
+.menuitem:hover {
+    color: var(--color-menu-resaltar);
+}
+
+#menuboton:not(.change) ~ nav .menuitem {
+position: relative;  /* to position the tooltip relative to the anchor tag */
+}
+#menuboton:not(.change) ~ nav .menuitem:hover {  /* for achieving the arrow shape at the bottom of the tooltip */
+text-decoration: none;
+}
+#menuboton:not(.change) ~ nav .menuitem::after,
+#menuboton:not(.change) ~ nav .menuitem::before {
+position: absolute;
+display: none;  /* initially hide it from view */
+}
+#menuboton:not(.change) ~ nav .menuitem::before {
+content: '';
+bottom: -5px;
+left: calc(10pt - 2.5px);
+height: 0px;
+width: 0px;
+/* the arrow */
+border-left: 5px solid transparent;
+border-bottom: 5px solid #242424;
+border-right: 5px solid transparent;
+}
+#menuboton:not(.change) ~ nav .menuitem::after {
+content: attr(titulo);  /* set content of pseudo element as the value of data-tooltip attribute */
+bottom: -28px;
+left: -5px;
+background: #242424;
+border-radius: 4px;  /* just a bit of extra styling */
+padding: 4px 9px;
+white-space: nowrap;
+color: #e6e6e6;
+}
+#menuboton:not(.change) ~ nav .menuitem:hover::after,
+#menuboton:not(.change) ~ nav .menuitem:hover::before {
+display: block;  /* display both tooltip and arrow mark when a is hovered on */
+}
+
+.menuitem img {
+    width: 20pt;
+    height: 20pt;
+    margin: auto;
+    transition: width ease .6s, height ease .6s;
+}
+
+.menuitem .desc {
+    display: none;
+    padding: 0 3pt;
+}
+
+#menuboton.change ~ nav {
+    height: 60pt;
+}
+
+#menuboton.change ~ nav .menuitem {
+    margin: 2pt 6pt;
+    padding: 2pt;
+}
+
+#menuboton.change ~ nav .menuitem img {
+    width: 40pt;
+    height: 40pt;
+}
+
+#menuboton.change ~ nav .menuitem .desc {
+    display: block;
+    top: 50pt;
+    align-items: center;
+}
+
+#reloj {
+    position: fixed;
+    top: 5pt;
+    right: 7pt;
+    color: var(--color-menu-letra);
+    font-weight: 600;
+}
+
+#infoversion {
+    position: fixed;
+    right: 10pt;
+    bottom: 7pt;
+    font-style: italic;
+}

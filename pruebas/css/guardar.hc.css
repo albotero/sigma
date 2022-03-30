@@ -1,0 +1,13 @@
+div.caja {
+    background-color: var(--color-fondo-elementos);
+    padding: 20pt;
+    border-radius: 15pt;
+    box-shadow: var(--color-sombra) 2px 2px;
+    width: 50%;
+    margin: 10% auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+p {
+    text-align: center;
+}
