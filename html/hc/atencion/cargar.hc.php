@@ -13,7 +13,7 @@ function consultarConsecutivo() {
         $carpeta = $row['Carpeta'];
 
         // Carga los datos en variables y luego envía a la plantilla correspondiente
-        $archivo = file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/../Atenciones/{$_SESSION['ips']}/$carpeta/{$_GET['c']}");
+        $archivo = file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/../../Atenciones/{$_SESSION['ips']}/$carpeta/{$_GET['c']}");
         $paciente = ejecutarSql("SELECT * FROM `pacientes` WHERE `Tipo_ID`='{$row['PacienteTipoId']}' AND `ID`='{$row['PacienteId']}'");
         $paciente = $paciente->fetch_assoc();
         $paciente = json_encode($paciente);

@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     Nombres varchar(32),
     Apellidos varchar(32),
     Especialidad varchar(32),
-    Registro varchar(16)
+    Registro varchar(16),
+    Grupo varchar(128)
 );
 
 CREATE TABLE IF NOT EXISTS historias (

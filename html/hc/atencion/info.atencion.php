@@ -7,7 +7,7 @@ require_once "{$_SERVER['DOCUMENT_ROOT']}/funciones/bd.class.php";
 require_once "{$_SERVER['DOCUMENT_ROOT']}/funciones/constantes.php";
 
 // Si el archivo contiene datos del paciente los utiliza y si no deja los que pasó el POST
-$cont_archivo = file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/../Atenciones/{$_SESSION['ips']}/{$_POST['d']}/{$_POST['c']}");
+$cont_archivo = file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/../../Atenciones/{$_SESSION['ips']}/{$_POST['d']}/{$_POST['c']}");
 $cont_archivo = json_decode($cont_archivo, true);
 if ($cont_archivo['paciente']) {
     $paciente = $cont_archivo['paciente'];

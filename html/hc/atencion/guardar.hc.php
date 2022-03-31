@@ -11,7 +11,7 @@ require_once "{$_SERVER['DOCUMENT_ROOT']}/funciones/bd.class.php";
     <body>
         <div class="caja">
             <?php
-            $ruta = "{$_SERVER['DOCUMENT_ROOT']}/../Atenciones/{$_SESSION['ips']}/{$_POST['d']}/{$_POST['c']}";
+            $ruta = "{$_SERVER['DOCUMENT_ROOT']}/../../Atenciones/{$_SESSION['ips']}/{$_POST['d']}/{$_POST['c']}";
             $datos = $_POST['datos'];
             $tipo = $_POST['tipo'];
 
