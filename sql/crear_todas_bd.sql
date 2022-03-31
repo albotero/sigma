@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS sigma;
 USE sigma;
 
-CREATE TABLE IF NOT EXISTS Pacientes (
+CREATE TABLE IF NOT EXISTS pacientes (
     Tipo_ID varchar(4),
     ID varchar(16),
     Nombres varchar(32),
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Pacientes (
     Alertas varchar(512)
 );
 
-CREATE TABLE IF NOT EXISTS Usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     Usuario varchar(16),
     Contrasena varchar(256),
     Tema varchar(32),
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     Registro varchar(16)
 );
 
-CREATE TABLE IF NOT EXISTS Historias (
+CREATE TABLE IF NOT EXISTS historias (
     Consecutivo smallint,
     Carpeta varchar(16),
     Creacion datetime,
