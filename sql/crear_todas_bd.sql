@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS usuarios (
 );
 
 CREATE TABLE IF NOT EXISTS historias (
-    Consecutivo smallint,
+    Consecutivo varchar(8),
     Carpeta varchar(16),
-    Creacion datetime,
+    Creacion varchar(32),
     UsuarioCreacion varchar(16),
-    Firma datetime,
+    Firma varchar(32),
     UsuarioFirma varchar(16),
     PacienteTipoId varchar(4),
     PacienteId varchar(16)
