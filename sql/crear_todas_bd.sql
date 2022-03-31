@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS pacientes (
     Nombres varchar(32),
     Apellidos varchar(32),
     Genero varchar(10),
-    Fecha_Nacimiento date,
+    Fecha_Nacimiento varchar(10),
     Grupo_Sanguineo varchar(4),
     Estado_Civil varchar(16),
     Ocupacion varchar(64),
