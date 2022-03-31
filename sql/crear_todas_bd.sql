@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS pacientes (
     Nombres varchar(32),
     Apellidos varchar(32),
     Genero varchar(10),
-    Fecha_Nacimiento date,
+    Fecha_Nacimiento varchar(10),
     Grupo_Sanguineo varchar(4),
     Estado_Civil varchar(16),
     Ocupacion varchar(64),
@@ -35,11 +35,11 @@ CREATE TABLE IF NOT EXISTS usuarios (
 );
 
 CREATE TABLE IF NOT EXISTS historias (
-    Consecutivo smallint,
+    Consecutivo varchar(8),
     Carpeta varchar(16),
-    Creacion datetime,
+    Creacion varchar(32),
     UsuarioCreacion varchar(16),
-    Firma datetime,
+    Firma varchar(32),
     UsuarioFirma varchar(16),
     PacienteTipoId varchar(4),
     PacienteId varchar(16)

@@ -74,7 +74,7 @@ $login->inicia("hc");
                     <tr><td>Nombres</td><td>Apellidos</td><td>Identificaci&oacute;n</td><td>Edad</td><td>G&eacute;nero</td></tr>
                     <?php
                     while($row = $listaPacientes->fetch_assoc()) {
-                        $edad = date_diff(date_create($row['Fecha_Nacimiento']), date_create('now'))->y;
+                        $edad = date_diff(new DateTime(str_replace('/', '-', $row['Fecha_Nacimiento'])), new DateTime())->y;
                         echo "<tr onclick=\"document.getElementById('roller').style.display = 'block';"
                         . "postPage('{$row['Tipo_ID']}', '{$row['ID']}', "
                         . "'{$row['Nombres']} {$row['Apellidos']}');\">"

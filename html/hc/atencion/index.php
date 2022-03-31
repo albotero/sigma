@@ -38,7 +38,7 @@ $paciente = $paciente->fetch_assoc();
         </div>
         <script type="text/javascript">
             <?php
-            $edad = date_diff(date_create($paciente['Fecha_Nacimiento']), date_create(date()))->y;
+            $edad = date_diff(new DateTime(str_replace('/', '-', $paciente['Fecha_Nacimiento'])), new DateTime())->y;
             $edad_genero_gs = implode(" / ", array_filter(array(
                 "$edad a&ntilde;os",
                 ucfirst(strtolower($paciente['Genero'])),
