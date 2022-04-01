@@ -39,7 +39,7 @@ session_start();
                 echo '<p>Se cambi&oacute; correctamente la contrase&ntilde;a.</p>'
                     . '<p>En 5 segundos ser&aacute; redirigido a la página de '
                     . 'login para ingresar con la nueva contrase&ntilde;a.</p>';
-                    redirect("/login", 5000);
+                header( "refresh:5;url=/login" );
             } else {
                 // Contraseña actual incorrecta
                 header("Location: /login/cambiar.contrasena.php?error=1");
