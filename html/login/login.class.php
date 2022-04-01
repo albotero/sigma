@@ -26,7 +26,7 @@ class login {
         }
     }  
     //  Verifica login
-    private function verificarCredenciales($usr, $pass) {
+    public function verificarCredenciales($usr, $pass) {
         $passGuardada = ejecutarSql("SELECT `Contrasena` FROM `usuarios` WHERE `Usuario`='$usr'");        
         if ($passGuardada->num_rows > 0){
             $row = $passGuardada->fetch_assoc();

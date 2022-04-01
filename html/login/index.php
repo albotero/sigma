@@ -53,7 +53,7 @@ session_start();
             }
             ?>
             <p class="links">
-                <a href="#">Ayuda</a>&emsp;&emsp;&emsp;
+                <a href="cambiar.contrasena.php">Cambiar contrase&ntilde;a</a>&emsp;&emsp;&emsp;
                 <a href="#">Recordar contrase&ntilde;a</a>
             </p>
         </div>
