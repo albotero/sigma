@@ -1,8 +1,9 @@
 {% if user.data %}
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/menu.css') }}">
   <nav>
-    <ul>
-      <li class="time"></li>
-      <li class="user">
+    <div class="menu">
+      <div class="time"></div>
+      <div class="item user">
         <a>{{ user.id }}</a>
         <ul>
           {% if 'admin' in user.data['roles'] %}
@@ -11,8 +12,8 @@
           <li class="passwd" onclick="window.location = `{{ url_for('password') }}`;"><a>Cambiar contraseña</a></li>
           <li class="logout" onclick="window.location = `{{ url_for('logout') }}`;"><a>Cerrar sesión</a></li>
         </ul>
-      </li>
-    </ul>
+      </div>
+    </div>
   </nav>
   <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 {% endif %}

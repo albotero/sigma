@@ -1,4 +1,4 @@
-setInterval(function() {
+function update_clock() {
   const time = new Date();
   let h = time.getHours() % 12;
   h = h == 0 ? 12 : h;
@@ -10,5 +10,8 @@ setInterval(function() {
 
   // Update clock
   const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-  $('.time').html(`${h}:${m}:${s} ${t}<br/>${time.getDate()} ${months[time.getMonth()]}. ${time.getFullYear()}`);
-}, 500);
+  $('.time').html(`${time.getDate()} ${months[time.getMonth()]}. ${time.getFullYear()} / ${h}:${m}:${s} ${t}`);
+}
+
+update_clock();
+setInterval(update_clock, 500);
