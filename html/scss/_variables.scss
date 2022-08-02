@@ -1,0 +1,28 @@
+$color1: rgb(255, 255, 255);
+$color2: rgb(226, 226, 237);
+$color2b: rgb(186, 186, 195);
+$color3: rgb(67, 90, 134);
+$color4: rgb(22, 34, 85);
+$color5: rgb(7, 15, 33);
+
+$color-error: rgb(206, 18, 18);
+$color-success: rgb(54, 122, 5);
+
+$color-preqx: rgb(186, 237, 244);
+$color-surgery: rgb(251, 210, 233);
+$color-pacu: rgb(243, 233, 189);
+$color-exit: rgb(183, 255, 183);
+
+$color-tooltip: rgb(77, 89, 102);
+
+@mixin icon($img, $width: 25px, $height: $width) {
+    content: '';
+    margin: -1.3px 10px;
+    background-image: url($img);
+    background-size: $width $height;
+    background-position: center;
+    display: inline-block;
+    width: $width;
+    height: $height;
+    filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}

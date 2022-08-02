@@ -1,0 +1,18 @@
+{% if user.data %}
+  <nav>
+    <ul>
+      <li class="time"></li>
+      <li class="user">
+        <a>{{ user.id }}</a>
+        <ul>
+          {% if 'admin' in user.data['roles'] %}
+            <li class="admin" onclick="window.location = `{{ url_for('dashboard') }}`;"><a>Administrador</a></li>
+          {% endif %}
+          <li class="passwd" onclick="window.location = `{{ url_for('password') }}`;"><a>Cambiar contraseña</a></li>
+          <li class="logout" onclick="window.location = `{{ url_for('logout') }}`;"><a>Cerrar sesión</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+{% endif %}

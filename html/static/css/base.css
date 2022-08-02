@@ -1,0 +1,88 @@
+body {
+  background-color: rgb(67, 90, 134);
+  padding-top: 50px;
+}
+
+.box {
+  width: min(250px, 50%);
+  background-color: rgb(255, 255, 255);
+  color: rgb(7, 15, 33);
+  margin: 50px auto;
+  padding: 40px;
+  display: grid;
+  justify-content: center;
+  border: 1px gradient(rgb(206, 206, 206), rgb(175, 177, 180));
+  border-radius: 15px;
+  box-shadow: 5px 5px 15px rgb(136, 136, 136);
+}
+.box h2 {
+  color: rgb(22, 34, 85);
+  font-variant: small-caps;
+  margin-top: -5px;
+  text-align: center;
+}
+.box.box--error > h2 {
+  color: rgb(206, 18, 18);
+}
+.box.box--error > h2 + p {
+  margin: -7px auto;
+}
+
+.--text-bold {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.button {
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background-color: rgb(226, 226, 237);
+  padding: 10px 20px;
+  border: 1px solid rgb(67, 90, 134);
+  border-radius: 10px;
+}
+.button:hover {
+  background-color: rgb(186, 186, 195);
+  cursor: pointer;
+  border-color: rgb(22, 34, 85);
+}
+.button:active {
+  background-color: rgb(67, 90, 134);
+  color: rgb(255, 255, 255);
+  border-color: rgb(186, 186, 195);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: rgb(77, 89, 102);
+  box-shadow: 0 1px 4px rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  width: 110px;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(77, 89, 102) transparent transparent transparent;
+}
+.tooltip:not(.disabled):hover .tooltiptext {
+  visibility: visible;
+}
