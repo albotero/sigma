@@ -26,7 +26,7 @@ body {
         text-align: center;
     }
 
-    &.box--error > h2 {
+    &.--box-error > h2 {
         color: $color-error;
         + p { margin: -7px auto; }
     }

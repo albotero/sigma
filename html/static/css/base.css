@@ -21,10 +21,10 @@ body {
   margin-top: -5px;
   text-align: center;
 }
-.box.box--error > h2 {
+.box.--box-error > h2 {
   color: rgb(206, 18, 18);
 }
-.box.box--error > h2 + p {
+.box.--box-error > h2 + p {
   margin: -7px auto;
 }
 

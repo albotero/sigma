@@ -111,7 +111,7 @@ def password():
         res = user.update_password(request.values['old_password'], request.values['new_password'])
         return render_template('password.html', user = user, result = res)
 
-    return render_template('password.html', user = user)
+    return render_template('password.html', user = user, result = None)
 
 @app.route('/dashboard')
 def dashboard():
