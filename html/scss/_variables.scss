@@ -16,9 +16,9 @@ $color-exit: rgb(183, 255, 183);
 
 $color-tooltip: rgb(77, 89, 102);
 
-@mixin icon($img, $width: 25px, $height: $width) {
+@mixin icon($img, $width: 20px, $height: $width) {
     content: '';
-    margin: -1.3px 10px;
+    margin: 4px 5px -4px 5px;
     background-image: url($img);
     background-size: $width $height;
     background-position: center;

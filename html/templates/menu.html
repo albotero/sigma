@@ -2,7 +2,11 @@
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/menu.css') }}">
   <nav>
     <div class="menu">
-      <div class="time"></div>
+      <div class="version">Sigma 2.0 - 220801</div>
+      <div class="time">
+        <div class="date"></div>
+        <div class="clock"></div>
+      </div>
       <div class="item user">
         <a>{{ user.id }}</a>
         <ul>

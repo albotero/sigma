@@ -15,21 +15,59 @@ nav .menu {
   display: flex;
   flex-direction: row-reverse;
 }
+nav .menu > div {
+  padding: 0 5px;
+}
+nav .menu .version {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-style: italic;
+}
 nav .menu .time {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  display: inline-flex;
+}
+nav .menu .time div {
+  margin: 0 5px;
+  line-height: 30px;
+}
+nav .menu .time .date::before {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/month.svg");
+  background-size: 20px 20px;
+  background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}
+nav .menu .time .clock::before {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/clock.svg");
+  background-size: 20px 20px;
+  background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}
+nav .menu .version, nav .menu .time {
   cursor: default;
   font-weight: bold;
 }
 nav .menu .item {
   width: 100px;
-  padding: 0 5px;
   cursor: pointer;
   text-align: center;
 }
-nav .menu .item > a {
+nav .menu .item a {
   line-height: 30px;
 }
 nav .menu .item > ul {
@@ -54,4 +92,48 @@ nav .menu .item:hover > ul {
 }
 nav .menu .user > a {
   font-weight: bold;
+}
+nav .menu .user > a::before {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/user.svg");
+  background-size: 20px 20px;
+  background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}
+nav .menu .admin > a::after {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/admin.svg");
+  background-size: 20px 20px;
+  background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}
+nav .menu .passwd > a::after {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/passwd.svg");
+  background-size: 20px 20px;
+  background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}
+nav .menu .logout > a::after {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/logout.svg");
+  background-size: 20px 20px;
+  background-position: center;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
 }

@@ -17,22 +17,43 @@ nav {
         display: flex;
         flex-direction: row-reverse;
 
+        > div { padding: 0 5px; }
+
+        .version {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-style: italic;
+        }
+
         .time {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            display: inline-flex;
+            
+            div {
+                margin: 0 5px;
+                line-height: 30px;
+            }
+
+            .date::before { @include icon('/static/svg/month.svg'); }
+            .clock::before { @include icon('/static/svg/clock.svg'); }
+        }
+
+        .version, .time {
             cursor: default;
             font-weight: bold;
         }
 
         .item {
             width: 100px;
-            padding: 0 5px;
             cursor: pointer;
             text-align: center;
 
-            > a { line-height: 30px; }
+            a { line-height: 30px; }
 
             > ul {
                 position: absolute;
@@ -56,5 +77,10 @@ nav {
         }
 
         .user > a { font-weight: bold; }
+
+        .user > a::before { @include icon('/static/svg/user.svg'); }
+        .admin > a::after { @include icon('/static/svg/admin.svg'); }
+        .passwd > a::after { @include icon('/static/svg/passwd.svg'); }
+        .logout > a::after { @include icon('/static/svg/logout.svg'); }
     }
 }
