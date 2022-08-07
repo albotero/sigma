@@ -15,4 +15,4 @@ function update_clock() {
 }
 
 update_clock();
-setInterval(update_clock, 500);
+setInterval(update_clock, 1000);
