@@ -1,0 +1,23 @@
+.board {
+  position: absolute;
+  top: 50px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: grid;
+  grid-template-columns: 30% 15px auto;
+  grid-template-rows: min(200px, 30%) 10px auto;
+  grid-template-areas: "patient . workarea" ". . workarea" "history . workarea";
+}
+.board .patient {
+  grid-area: patient;
+  background-color: rgb(0, 255, 255);
+}
+.board .history {
+  grid-area: history;
+  background-color: rgb(89, 255, 0);
+}
+.board .workarea {
+  grid-area: workarea;
+  background-color: rgb(255, 77, 0);
+}

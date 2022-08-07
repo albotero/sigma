@@ -2,12 +2,20 @@
 
 {% block title %} Sigma - Historia Clínica {% endblock %}
 
-{% block style %} {% endblock %}
+{% block style %}
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/board.css') }}">
+{% endblock %}
 
 {% block content %}
   {% with user = user %}
     {% include 'menu.html' %}
   {% endwith %}
+
+  <div class="board">
+    <div class="patient"></div>
+    <div class="history"></div>
+    <div class="workarea"></div>
+  </div>
 {% endblock %}
 
 {% block scripts %} {% endblock %}

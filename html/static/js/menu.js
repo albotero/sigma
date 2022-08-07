@@ -11,7 +11,7 @@ function update_clock() {
   // Update clock
   const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
   $('.date').html(`${time.getDate()} ${months[time.getMonth()]}. ${time.getFullYear()}`);
-  $('.clock').html(`${h}:${m}:${s} ${t}`);
+  $('.clock').html(`${h}:${m} ${t}`);
 }
 
 update_clock();

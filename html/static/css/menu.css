@@ -7,6 +7,7 @@ nav {
   background-color: rgb(208, 208, 220);
   color: rgb(7, 15, 33);
   user-select: none;
+  z-index: 999;
 }
 nav .menu {
   position: relative;

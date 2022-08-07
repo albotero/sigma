@@ -9,6 +9,7 @@ nav {
     background-color: $color2;
     color: $color5;
     user-select: none;
+    z-index: 999;
 
     .menu {
         position: relative;
