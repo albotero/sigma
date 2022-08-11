@@ -19,28 +19,13 @@ class Data:
             return pickle.load(file)
 
 
-class ClinicalRecord:
-    
-    def __init__(self):
-        self.id = f'clrec-{uuid.uuid4()}'
-        self.data = {}
-
-
 class ClinicalEvent:
     
     def __init__(self):
         self.id = f'clev-{uuid.uuid4()}'
         self.time = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
         self.sign = None
-        self.records = []
-        self.save()
-
-    def add_record(self, record: ClinicalRecord):
-        self.records += [ record ]
-        self.save()
-
-    def del_record(self, recordid):
-        self.records = [ rec for rec in self.records if rec.id != recordid ]
+        self.data = {}
         self.save()
 
     def save(self):

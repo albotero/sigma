@@ -4,6 +4,7 @@
 
 {% block style %}
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/board.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/record.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -12,9 +13,19 @@
   {% endwith %}
 
   <div class="board">
-    <div class="patient"></div>
-    <div class="history"></div>
-    <div class="workarea"></div>
+    <div class="--patient"></div>
+    <div class="--history"></div>
+    <div class="--workarea">
+      <div class="--workarea-content">
+        {% with sections=[
+          'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo',
+          'salud_oral', 'higiene', 'examen_clinico', 'perio', 'procedimiento',
+          'diagnostico', 'plan', 'formula'
+          ] %}
+          {% include 'clinical_events/odontologia.html' %}
+        {% endwith %}
+      </div>
+    </div>
   </div>
 {% endblock %}
 

@@ -1,5 +1,6 @@
 $color1: rgb(255, 255, 255);
-$color2: rgb(208, 208, 220);
+$color1b: rgb(227, 227, 238);
+$color2: rgb(208, 208, 222);
 $color2b: rgb(186, 186, 195);
 $color2c: rgb(140, 140, 146);
 $color3: rgb(67, 90, 134);
@@ -25,5 +26,6 @@ $color-tooltip: rgb(77, 89, 102);
     display: inline-block;
     width: $width;
     height: $height;
-    filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+    //filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+    filter: invert(100%);
 }

@@ -9,7 +9,7 @@ form input[type=submit], form input[type=button] {
   width: 150px;
   height: 35px;
   border-radius: 10px;
-  background-color: rgb(208, 208, 220);
+  background-color: rgb(208, 208, 222);
 }
 form input[type=submit]:hover, form input[type=button]:hover {
   background-color: rgb(186, 186, 195);
@@ -44,7 +44,7 @@ form input[type=submit]:active, form input[type=button]:active {
   font-weight: bold;
 }
 .input-group input:focus {
-  background-color: rgb(208, 208, 220);
+  background-color: rgb(208, 208, 222);
   outline: 2px solid rgb(22, 34, 85);
   outline-color: rgb(67, 90, 134);
 }

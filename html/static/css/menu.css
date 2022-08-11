@@ -4,8 +4,8 @@ nav {
   left: 0;
   right: 0;
   height: 30px;
-  background-color: rgb(208, 208, 220);
-  color: rgb(7, 15, 33);
+  background-color: rgb(67, 90, 134);
+  color: rgb(255, 255, 255);
   user-select: none;
   z-index: 999;
 }
@@ -46,7 +46,7 @@ nav .menu .time .date::before {
   display: inline-block;
   width: 20px;
   height: 20px;
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  filter: invert(100%);
 }
 nav .menu .time .clock::before {
   content: "";
@@ -57,7 +57,7 @@ nav .menu .time .clock::before {
   display: inline-block;
   width: 20px;
   height: 20px;
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  filter: invert(100%);
 }
 nav .menu .version, nav .menu .time {
   cursor: default;
@@ -77,16 +77,23 @@ nav .menu .item > ul {
   top: 30px;
   margin: 0;
   padding: 0;
-  background-color: rgb(186, 186, 195);
+  background-color: rgb(67, 90, 134);
   display: none;
   text-align: right;
+  box-shadow: rgb(7, 15, 33) 1px 3px 7px;
 }
 nav .menu .item > ul li {
   list-style: none;
   padding: 3px 7.5px;
 }
 nav .menu .item:hover, nav .menu .item li:hover {
-  background-color: rgb(140, 140, 146);
+  background-color: rgb(186, 186, 195);
+}
+nav .menu .item:hover > a, nav .menu .item li:hover > a {
+  color: rgb(22, 34, 85);
+}
+nav .menu .item:hover > a::before, nav .menu .item:hover > a::after, nav .menu .item li:hover > a::before, nav .menu .item li:hover > a::after {
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
 }
 nav .menu .item:hover > ul {
   display: block;
@@ -103,7 +110,7 @@ nav .menu .user > a::before {
   display: inline-block;
   width: 20px;
   height: 20px;
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  filter: invert(100%);
 }
 nav .menu .admin > a::after {
   content: "";
@@ -114,7 +121,7 @@ nav .menu .admin > a::after {
   display: inline-block;
   width: 20px;
   height: 20px;
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  filter: invert(100%);
 }
 nav .menu .passwd > a::after {
   content: "";
@@ -125,7 +132,7 @@ nav .menu .passwd > a::after {
   display: inline-block;
   width: 20px;
   height: 20px;
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  filter: invert(100%);
 }
 nav .menu .logout > a::after {
   content: "";
@@ -136,5 +143,5 @@ nav .menu .logout > a::after {
   display: inline-block;
   width: 20px;
   height: 20px;
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  filter: invert(100%);
 }

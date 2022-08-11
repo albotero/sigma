@@ -6,8 +6,8 @@ nav {
     left: 0;
     right: 0;
     height: 30px;
-    background-color: $color2;
-    color: $color5;
+    background-color: $color3;
+    color: $color1;
     user-select: none;
     z-index: 999;
 
@@ -62,9 +62,10 @@ nav {
                 top: 30px;
                 margin: 0;
                 padding: 0;
-                background-color: $color2b;
+                background-color: $color3;
                 display: none;
                 text-align: right;
+                box-shadow: $color5 1px 3px 7px;
 
                 li {
                     list-style: none;
@@ -72,7 +73,13 @@ nav {
                 }
             }
 
-            &:hover, li:hover { background-color: $color2c; }
+            &:hover, li:hover {
+                background-color: $color2b;                
+                > a {
+                    color: $color4;
+                    &::before, &::after { filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%) }
+                }
+            }
 
             &:hover > ul { display: block; }
         }

@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(67, 90, 134);
+  background-color: rgb(227, 227, 238);
   padding-top: 50px;
 }
 
@@ -38,7 +38,7 @@ body {
   height: 30px;
   line-height: 30px;
   text-align: center;
-  background-color: rgb(208, 208, 220);
+  background-color: rgb(208, 208, 222);
   padding: 10px 20px;
   border: 1px solid rgb(67, 90, 134);
   border-radius: 10px;

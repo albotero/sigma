@@ -1,0 +1,338 @@
+{% set empty = '-' %}
+
+{% if 'mc' in sections %}
+    <div class="--section">
+        <div class="--section-title">motivo de consulta</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('mc', empty)}}
+            {% else %}
+                <input type="text" name="data[mc]">
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'ea' in sections %}
+    <div class="--section">
+        <div class="--section-title">enfermedad actual</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('ea', empty) }}
+            {% else %}
+                <textarea name="data[ea]"></textarea>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'antecedentes' in sections %}
+    {% set antecedentes_neg = 'negativo' %}
+    {% set antec_dict = {
+        'antecedentes personales': [
+            'hipertensión', 'diabetes', 'enf. cardiovasculares', 'enf. respiratorias', 'enf. endocrinas',
+            'cáncer', 'osteoporosis', 'artritis reumatoide', 'epilepsia', 'enf. mentales', 'enf. hemorrágicas',
+            'anomalías congénitas', 'alergias', 'cirugías', 'otros'
+        ],
+        'antecedentes familiares': [
+            'hipertensión', 'diabetes', 'enf. cardiovasculares', 'enf. respiratorias', 'enf. endocrinas',
+            'cáncer', 'artritis reumatoide', 'enf. mentales', 'enf. hemorrágicas', 'otros'
+        ]
+        } %}
+    
+    {% for section, antec_list in antec_dict.items() %}
+        <div class="--section">
+            <div class="--section-title">{{ section }}</div>
+            <div class="--section-content --section-columns --section-columns-4">
+                {% for antec_item in antec_list %}
+                    <div class="--list-title">{{ antec_item }}</div>
+                    {% if data %}
+                        {{ data['antecedentes'].get(antec_item, empty) }}
+                    {% else %}
+                        <input type="text" name="data[antecedentes][{{ antec_item }}]" value="{{ antecedentes_neg }}">
+                        <div></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+{% if 'hist_odont' in sections %}
+    {% set hist_odont_neg = 'ninguna' %}
+    {% set hist_odont_dict = {
+        'general': 'ha sido sometido a anestesia general',
+        'local': 'le han aplicado anestesia local',
+        'exodoncia': 'le han realizado alguna exodoncia',
+        'hemorragia': 'ha presentado hemorragia postexodoncia'
+    } %}
+
+    <div class="--section">
+        <div class="--section-title">historia odontológica</div>
+        <div class="--section-content --section-columns --section-columns-3a">
+            {% for item, text in hist_odont_dict.items() %}
+                <label>
+                    <div class="--list-title">{{ item }}</div>
+                    {% if data %}
+                        {{ 'si' if data['hist_odont'].get(item) else 'no' }}
+                    {% else %}
+                        <input type="checkbox" name="data[hist_odont][{{ item }}]">
+                    {% endif %}
+                </label>
+                <div></div>
+                <div class="--list-title">{{ 'observaciones' if item in ['hemorragia'] else 'complicaciones' }}</div>
+                {% if data %}
+                    {{ data['hist_odont'].get('obs_'+item, hist_odont_neg) }}
+                {% else %}
+                    <input type="text" name="data[hist_odont][obs_{{ item }}]"
+                        value="{{ hist_odont_neg }}" style="grid-column: 4/7;">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'tto_previo' in sections %}
+    {% set tto_previo_neg = 'buena' %}
+    {% set tto_previo_list = [ 'prevención', 'operatoria', 'cirugía', 'endodoncia', 'periodoncia', 'rehabilitación', 'ortodoncia' ] %}
+    {% set tto_previo_actitud = {
+        'previa': 'actitud ante los tratamientos previos',
+        'actual': 'actitud ante el tratamiento actual'
+    } %}
+
+    <div class="--section">
+        <div class="--section-title">tratamientos odontológicos previos</div>
+        <div class="--section-content --section-columns">
+            {% for item in tto_previo_list %}
+                <label>
+                    <div class="--list-title">{{ item }}</div>
+                    {% if data %}
+                        {{ 'si' if data['tto_previo'].get(item) else 'no' }}
+                    {% else %}
+                        <input type="checkbox" name="data[tto_previo][{{ item }}]">
+                    {% endif %}
+                </label>
+            {% endfor %}
+        </div>
+        <div class="--section-content --section-columns">
+            {% for item, text in tto_previo_actitud.items() %}
+                <div class="--list-title">{{ text }}</div>
+                {% if data %}
+                    {{ data['tto_previo'].get(item, tto_previo_neg) }}
+                {% else %}
+                    <input type="text" name="data[tto_previo][{{ item }}]"
+                        value="{{ tto_previo_neg }}" style="grid-column: 2/5;">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'evolucion' in sections %}
+    <div class="--section">
+        <div class="--section-title">evolución</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('evolucion', empty) }}
+            {% else %}
+                <textarea name="data[evolucion]"></textarea>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'salud_oral' in sections %}
+    {% set salud_oral_list = [
+        'dolor en músculos masticatorios', 'dolor en a.t.m.', 'ruido de a.t.m.',
+        'alteración en el movimiento', 'desarmonías oclusales', 'hábitos',
+        'xerostomía', 'odontalgia', 'dolor/ardor en tejidos blandos',
+        'sensibilidad dentaria', 'sangrado gingival', 'halitosis'
+    ] %}
+
+    <div class="--section">
+        <div class="--section-title">estado de salud oral</div>
+        <div class="--section-content --section-columns">
+            {% for item in salud_oral_list %}
+                <div>
+                    <label>
+                        <div class="--list-title">{{ item }}</div>
+                        {% if data %}
+                            {{ 'si' if data['salud_oral'].get(item) else 'no' }}
+                        {% else %}
+                            <input type="checkbox" name="data[salud_oral][{{ item }}]">
+                        {% endif %}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'higiene' in sections %}
+    {% set higiene_list = [ 'higiene', 'seda dental', 'cepillo de dientes', 'crema dental', 'enjuague bucal' ] %}
+    {% set higiene_options_a = [ 'buena', 'regular', 'mala' ] %}
+    {% set higiene_options_b = [ 'no utiliza', '1 vez al día', '2 veces al día', '3 veces al día', 'más de 3 veces al día' ] %}
+
+    <div class="--section">
+        <div class="--section-title">higiene oral</div>
+        <div class="--section-content --section-columns --section-columns-6a">
+            {% for item in higiene_list %}
+                <div class="--list-title">{{ item }}</div>
+                {% if data %}
+                    {{ data['higiene'].get(item) }}
+                {% else %}
+                    <select name="data[higiene][{{ item }}]">
+                        {% set options = higiene_options_a if item in ['higiene'] else higiene_options_b %}
+                        {% for opt in options %}
+                            <option value="{{ opt }}">{{ opt }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                <div></div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'examen_clinico' in sections %}
+    <div class="--section">
+        <div class="--section-title">signos vitales</div>
+        <div class="--section-content">
+            <div class="--section-columns --section-columns-6b">
+                <div class="--list-title">peso (kg)</div>
+                <input type="text" name="data[clinico][peso]" id="">
+                <div></div>
+                <div class="--list-title">talla (cm)</div>
+                <input type="text" name="data[clinico][talla]" id="">
+                <div></div>
+                <div class="--list-title">imc</div>
+                <div id="imc">18.9</div>
+            </div>
+            <div class="--section-columns --section-columns-6b">
+                <div class="--list-title">fc (lpm)</div>
+                <input type="text" name="data[clinico][fc]" id="">
+                <div></div>
+                <div class="--list-title">pa (mmhg)</div>
+                <input type="text" name="data[clinico][pa]" id="">
+                <div></div>
+                <div class="--list-title">pam</div>
+                <div id="pam">106</div>
+            </div>
+        </div>
+    </div>
+
+    {% set intraoral_options = [ 'no evaluado', 'normal', 'alterado' ] %}
+    {% set intraoral_list = [
+        'labios', 'carrillos', 'surco vestibular', 'encía', 'reborde alveolar',
+        'lengua', 'piso de boca', 'frenillos', 'paladar duro', 'paladar blando',
+        'amígdalas / orofaringe', 'glándulas salivales'
+    ] %}
+    <div class="--section">
+        <div class="--section-title">examen intraoral</div>
+        <div class="--section-content">
+            {% for item in intraoral_list %}
+                <div class="--section-columns --section-columns-3b">
+                    <div class="--list-title">{{ item }}</div>
+                    <div class="--horizontal">
+                        {% if data %}
+                            {{ data['intraoral'].get(item) }}
+                        {% else %}
+                                {% for opt in intraoral_options %}
+                                    <label>
+                                        <input type="radio"
+                                            name="data[intraoral][{{ item }}]"
+                                            value="{{ opt }}"
+                                            {{ 'checked' if opt==intraoral_options[0] }}>
+                                        {{ opt }}
+                                    </label>
+                                {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div></div>
+                    <div class="--horizontal">
+                        <div class="--list-title">detalle</div>
+                        {% if data %}
+                            {{ data['intraoral'].get('obs_'+item, empty) }}
+                        {% else %}
+                            <input type="text" id="io_obs_{{ item }}" name="data[intraoral][obs_{{ item }}]">
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'perio' in sections %}
+    <div class="--section">
+        <div class="--section-title">periodontograma</div>
+        <div class="--section-content">
+            <iframe src="https://i-perio.com/" frameborder="0"></iframe>
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'procedimiento' in sections %}
+    <div class="--section">
+        <div class="--section-title">descripción de procedimiento</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('procedimiento', empty) }}
+            {% else %}
+                <textarea name="data[procedimiento]"></textarea>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'diagnostico' in sections %}
+    <div class="--section">
+        <div class="--section-title">diagnóstico</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('diagnostico', empty)}}
+            {% else %}
+                <input type="text" name="data[diagnostico]">
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'plan' in sections %}
+    <div class="--section">
+        <div class="--section-title">plan</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('plan', empty) }}
+            {% else %}
+                <textarea name="data[plan]"></textarea>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if 'formula' in sections %}
+    <div class="--section">
+        <div class="--section-title">fórmula</div>
+        <div class="--section-content">
+            {% if data %}
+                {{ data.get('formula', empty) }}
+            {% else %}
+                <textarea name="data[formula]"></textarea>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

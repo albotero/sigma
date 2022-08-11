@@ -5,19 +5,29 @@
   left: 20px;
   right: 20px;
   display: grid;
-  grid-template-columns: 30% 15px auto;
-  grid-template-rows: min(200px, 30%) 10px auto;
+  grid-template-columns: 25% 15px auto;
+  grid-template-rows: min(200px, 30%) 10px calc(100% - min(200px, 30%) - 10px);
   grid-template-areas: "patient . workarea" ". . workarea" "history . workarea";
 }
-.board .patient {
+.board .--patient {
   grid-area: patient;
   background-color: rgb(0, 255, 255);
 }
-.board .history {
+.board .--history {
   grid-area: history;
   background-color: rgb(89, 255, 0);
 }
-.board .workarea {
+.board .--workarea {
   grid-area: workarea;
-  background-color: rgb(255, 77, 0);
+  position: relative;
+  overflow: hidden;
+}
+.board .--workarea .--workarea-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  padding: 20px;
 }
