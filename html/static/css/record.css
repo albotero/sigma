@@ -73,11 +73,11 @@
   content: ":";
   margin: 0 7.5px 0 0;
 }
-.--section #imc::after {
+.--section #bmi::after {
   content: "kg/m²";
   margin: 0 0 0 5px;
 }
-.--section #pam::after {
+.--section #map::after {
   content: "mmhg";
   margin: 0 0 0 5px;
 }

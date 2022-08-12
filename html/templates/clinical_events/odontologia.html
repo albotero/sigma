@@ -208,26 +208,39 @@
         <div class="--section-content">
             <div class="--section-columns --section-columns-6b">
                 <div class="--list-title">peso (kg)</div>
-                <input type="text" name="data[clinico][peso]" id="">
+                <input type="text" name="data[clinico][peso]" id="weight" onchange="update_bmi();">
                 <div></div>
                 <div class="--list-title">talla (cm)</div>
-                <input type="text" name="data[clinico][talla]" id="">
+                <input type="text" name="data[clinico][talla]" id="height" onchange="update_bmi();">
                 <div></div>
                 <div class="--list-title">imc</div>
-                <div id="imc">18.9</div>
+                <div id="bmi">-</div>
             </div>
             <div class="--section-columns --section-columns-6b">
                 <div class="--list-title">fc (lpm)</div>
-                <input type="text" name="data[clinico][fc]" id="">
+                <input type="text" name="data[clinico][fc]">
                 <div></div>
                 <div class="--list-title">pa (mmhg)</div>
-                <input type="text" name="data[clinico][pa]" id="">
+                <input type="text" name="data[clinico][pa]" id="nibp" onchange="update_map();">
                 <div></div>
                 <div class="--list-title">pam</div>
-                <div id="pam">106</div>
+                <div id="map">-</div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function update_bmi() {
+            let bmi = $('#weight').val()/Math.pow($('#height').val()/100, 2);
+            $('#bmi').text((bmi > 0 && bmi !== Infinity) ? bmi.toFixed(1) : '-');
+        }
+
+        function update_map() {
+            let nibp = $('#nibp').val().split('/');
+            let map = (nibp[0] * 1 + nibp[1] * 2) / 3;
+            $('#map').text((nibp.length == 2 && nibp.every(n => n > 0)) ? map.toFixed(0) : '-');
+        }
+    </script>
 
     {% set intraoral_options = [ 'no evaluado', 'normal', 'alterado' ] %}
     {% set intraoral_list = [
@@ -276,7 +289,9 @@
     <div class="--section">
         <div class="--section-title">periodontograma</div>
         <div class="--section-content">
-            <iframe src="https://i-perio.com/" frameborder="0"></iframe>
+            {% with perio_id=None %}
+                {% include 'clinical_events/periodontograma.html' %}
+              {% endwith %}
         </div>
     </div>
 {% endif %}
