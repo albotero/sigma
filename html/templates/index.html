@@ -4,7 +4,13 @@
 
 {% block style %}
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/board.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/patient.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/record.css') }}">
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/patient.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -13,14 +19,33 @@
   {% endwith %}
 
   <div class="board">
-    <div class="--patient"></div>
+    <div class="--patient">
+      <h2>Buscar Paciente</h2>
+      <form id="patient">
+        <div class="input-group">
+          <input type="text" id="patient[surname]" placeholder="-">
+          <label>Nombre(s)</label>
+        </div>
+        <div class="input-group">
+          <input type="text" id="patient[lastname]" placeholder="-">
+          <label>Apellido(s)</label>
+        </div>
+        <div class="input-group">
+          <input type="text" id="patient[id]" placeholder="-">
+          <label>ID</label>
+        </div>
+        <div class="buttons">
+          <input type="button" value="Buscar">
+          <input type="button" value="Nuevo paciente">
+        </div>
+      </form>
+    </div>
     <div class="--history"></div>
     <div class="--workarea">
       <div class="--workarea-content">
         {% with sections=[
-          'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo',
-          'salud_oral', 'higiene', 'examen_clinico', 'perio', 'procedimiento',
-          'diagnostico', 'plan', 'formula'
+          'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
+          'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
           ] %}
           {% include 'clinical_events/odontologia.html' %}
         {% endwith %}
@@ -28,5 +53,3 @@
     </div>
   </div>
 {% endblock %}
-
-{% block scripts %} {% endblock %}

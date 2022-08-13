@@ -1,0 +1,39 @@
+@import 'variables';
+
+.--patient {
+    grid-area: patient;
+
+    h2 { margin: 20px auto 5px auto; }
+
+    form#patient {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+        padding: 10px;
+        
+        .input-group, .buttons {
+            margin: 7px 10px;
+        }
+
+        .input-group input[type=text] {
+            width: 90%;
+        }
+
+        .buttons input[type=button] {
+            border-radius: 7.5px;
+            padding: 7.5px 10px;
+            margin: 0 5px 0 0;
+            background-color: $color2;
+
+            &:hover {
+                background-color: $color2b;
+                cursor: pointer;
+            }
+
+            &:active {
+                background-color: $color3;
+                color: $color1;
+            }
+        }
+    }
+}

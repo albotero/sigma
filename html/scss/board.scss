@@ -7,16 +7,11 @@
 
     display: grid;
     grid-template-columns: 25% 15px auto;
-    grid-template-rows: min(200px, 30%) 10px calc(100% - min(200px, 30%) - 10px);
+    grid-template-rows: min(200px, 30%) 10px auto;
     grid-template-areas:
         "patient . workarea"
         ". . workarea"
         "history . workarea";
-
-    .--patient {
-        grid-area: patient;
-        background-color: rgb(0, 255, 255);
-    }
 
     .--history {
         grid-area: history;
