@@ -17,6 +17,10 @@ $color-exit: rgb(183, 255, 183);
 
 $color-tooltip: rgb(77, 89, 102);
 
+@mixin filter_color4 {
+    filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+}
+
 @mixin icon($img, $width: 20px, $height: $width) {
     content: '';
     margin: 4px 5px -4px 5px;
@@ -26,6 +30,5 @@ $color-tooltip: rgb(77, 89, 102);
     display: inline-block;
     width: $width;
     height: $height;
-    //filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
     filter: invert(100%);
 }

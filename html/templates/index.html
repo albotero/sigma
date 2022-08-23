@@ -5,6 +5,7 @@
 {% block style %}
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/board.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/patient.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/history.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/record.css') }}">
 {% endblock %}
 
@@ -40,7 +41,38 @@
         </div>
       </form>
     </div>
-    <div class="--history"></div>
+    <div class="--history">
+      
+      {% for i in range(1, 16) %}
+
+      <div class="--history-patient">
+        <div class="title">
+          <div class="name">Paciente {{ i }}</div>
+          <div class="id">CC 34556789</div>
+        </div>
+        <div class="event">
+          <div class="name">evolución</div>
+          <div class="id">{{ 100+16-i }}4</div>
+          <div class="time">12/08/2022 12:35 pm</div>
+          <div class="user">Vanessa Jiménez (Periodoncia)</div>
+        </div>
+        <div class="event">
+          <div class="name">evolución</div>
+          <div class="id">{{ 100+16-i }}3</div>
+          <div class="time">12/08/2022 12:35 pm</div>
+          <div class="user">Vanessa Jiménez (Periodoncia)</div>
+        </div>
+        <div class="event">
+          <div class="name">ingreso</div>
+          <div class="id">{{ 100+16-i }}2</div>
+          <div class="time">12/08/2022 12:35 pm</div>
+          <div class="user">Vanessa Jiménez (Periodoncia)</div>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </div>
     <div class="--workarea">
       <div class="--workarea-content">
         {% with sections=[

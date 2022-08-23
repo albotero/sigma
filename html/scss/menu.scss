@@ -11,6 +11,10 @@ nav {
     user-select: none;
     z-index: 999;
 
+    .menu, .item > ul {
+        box-shadow: $color5 0px 3px 10px;
+    }
+
     .menu {
         position: relative;
         width: 100%;
@@ -65,7 +69,6 @@ nav {
                 background-color: $color3;
                 display: none;
                 text-align: right;
-                box-shadow: $color5 1px 3px 7px;
 
                 li {
                     list-style: none;

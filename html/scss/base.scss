@@ -85,29 +85,6 @@ h2 {
     font-style: italic;
 }
 
-.button {
-    width: 150px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    background-color: $color2;
-    padding: 10px 20px;
-    border: 1px solid $color3;
-    border-radius: 10px;
-
-    &:hover {
-        background-color: $color2b;
-        cursor: pointer;
-        border-color: $color4;
-    }
-
-    &:active {
-        background-color: $color3;
-        color: $color1;
-        border-color: $color2b;
-    }
-}
-
 .tooltip {
     position: relative;
     display: inline-block;

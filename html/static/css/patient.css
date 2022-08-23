@@ -1,14 +1,12 @@
 .--patient {
   grid-area: patient;
-}
-.--patient h2 {
-  margin: 20px auto 5px auto;
+  margin-top: 10px;
 }
 .--patient form#patient {
   display: grid;
   grid-template-columns: 50% 50%;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
 }
 .--patient form#patient .input-group, .--patient form#patient .buttons {
   margin: 7px 10px;
@@ -20,10 +18,10 @@
   border-radius: 7.5px;
   padding: 7.5px 10px;
   margin: 0 5px 0 0;
-  background-color: rgb(208, 208, 222);
+  background-color: rgb(186, 186, 195);
 }
 .--patient form#patient .buttons input[type=button]:hover {
-  background-color: rgb(186, 186, 195);
+  background-color: rgb(208, 208, 222);
   cursor: pointer;
 }
 .--patient form#patient .buttons input[type=button]:active {

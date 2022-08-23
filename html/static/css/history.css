@@ -1,0 +1,63 @@
+.--history, .--history-patient {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.--history {
+  grid-area: history;
+  margin: 20px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(7, 15, 33) 1px 3px 6px;
+  overflow: auto;
+  border-radius: 3px;
+}
+.--history .--history-patient {
+  user-select: none;
+  cursor: pointer;
+}
+.--history .--history-patient:not(:first-child) {
+  box-shadow: rgb(7, 15, 33) 0 0 3px;
+}
+.--history .--history-patient .title {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  padding: 5px 10px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(140, 140, 146);
+  font-variant: small-caps;
+  font-weight: bold;
+}
+.--history .--history-patient .event {
+  padding: 3px 0 3px 20px;
+  display: grid;
+  grid-template-columns: 25% 25% auto;
+  box-shadow: rgb(7, 15, 33) 0 0 1px;
+  color: rgb(22, 34, 85);
+}
+.--history .--history-patient .event:hover {
+  background-color: rgb(208, 208, 222);
+}
+.--history .--history-patient .event .name {
+  grid-row: 1/3;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.--history .--history-patient .event .id::before {
+  content: "# ";
+}
+.--history .--history-patient .event .time::before {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/month.svg");
+  background-size: 16px 16px;
+  background-position: center;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  filter: invert(100%);
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  margin: 2px 5px -2px 5px;
+}
+.--history .--history-patient .event .user {
+  grid-column: 2/4;
+}

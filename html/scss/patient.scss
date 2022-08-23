@@ -2,14 +2,13 @@
 
 .--patient {
     grid-area: patient;
-
-    h2 { margin: 20px auto 5px auto; }
+    margin-top: 10px;
 
     form#patient {
         display: grid;
         grid-template-columns: 50% 50%;
         align-items: center;
-        padding: 10px;
+        padding: 20px;
         
         .input-group, .buttons {
             margin: 7px 10px;
@@ -23,10 +22,10 @@
             border-radius: 7.5px;
             padding: 7.5px 10px;
             margin: 0 5px 0 0;
-            background-color: $color2;
+            background-color: $color2b;
 
             &:hover {
-                background-color: $color2b;
+                background-color: $color2;
                 cursor: pointer;
             }
 

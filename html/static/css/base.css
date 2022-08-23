@@ -73,27 +73,6 @@ h2 {
   font-style: italic;
 }
 
-.button {
-  width: 150px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  background-color: rgb(208, 208, 222);
-  padding: 10px 20px;
-  border: 1px solid rgb(67, 90, 134);
-  border-radius: 10px;
-}
-.button:hover {
-  background-color: rgb(186, 186, 195);
-  cursor: pointer;
-  border-color: rgb(22, 34, 85);
-}
-.button:active {
-  background-color: rgb(67, 90, 134);
-  color: rgb(255, 255, 255);
-  border-color: rgb(186, 186, 195);
-}
-
 .tooltip {
   position: relative;
   display: inline-block;
