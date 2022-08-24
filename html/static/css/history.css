@@ -20,12 +20,15 @@
 }
 .--history .--history-patient .title {
   display: grid;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: auto 35% 15px;
   padding: 5px 10px;
   color: rgb(255, 255, 255);
   background-color: rgb(140, 140, 146);
   font-variant: small-caps;
   font-weight: bold;
+}
+.--history .--history-patient .title .new-event::before {
+  content: "+";
 }
 .--history .--history-patient .event {
   padding: 3px 0 3px 20px;

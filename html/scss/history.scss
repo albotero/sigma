@@ -22,12 +22,16 @@
         
         .title {
             display: grid;
-            grid-template-columns: 65% 35%;
+            grid-template-columns: auto 35% 15px;
             padding: 5px 10px;
             color: $color1;
             background-color: $color2c;
             font-variant: small-caps;
             font-weight: bold;
+
+            .new-event::before {
+                content: '+';
+            }
         }
 
         .event {

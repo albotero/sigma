@@ -77,7 +77,6 @@ class Patient:
             self.save()
         except PatientExistsException as e:
             print(f'Error: {e}')
-            #Patient.load(id).add_event(ClinicalEvent('Evolución Periodoncia', 'Dra. Vanessa Jiménez'))
 
     def add_to_index(self, data):
         with open(patient_index_path, 'a') as file:
@@ -100,9 +99,9 @@ class Patient:
 
     def get_dict(self, surname = None, lastname = None):
         return {
+            'id': self.id,
             'surname': surname,
             'lastname': lastname,
-            'id': self.id,
             'events': [ ClinicalEvent.get_dict(e) for e in sorted(self.events, reverse=True) ]
         }
 

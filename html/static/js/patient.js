@@ -24,13 +24,14 @@ var load_record = (record_id) => socket_event({'action': 'load_record', 'record_
 var save_record = (record_id) => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
 var sign_record = (record_id) => socket_event({'action': 'sign_record', 'record_id': record_id, 'data': getFormData('record') });
 
-var current = {};
+var _current_ = {};
 
 socket.on('response_event', (data) => {
 switch (data['action']) {
     
     case 'load_history':
-    case 'new_patient':     
+    case 'new_patient':
+        _current_ = {};
         let html = '';
         if (data['patients']) {
             for (p of data['patients']) {
@@ -39,11 +40,13 @@ switch (data['action']) {
                     <div class="title" onclick="load_history(${ build_filter(p, ['id', 'surname', 'lastname']) })">
                         <div class="name">${ p['surname'] } ${ p['lastname'] }</div>
                         <div class="id">${ p['id'] }</div>
+                        <div class="new-event" onclick="new_record('${p['id']}', 'Evolución Periodoncia')"></div>
                     </div>`;
                 if (p['events']) {
+                    _current_['patient'] = p;
                     for (e of p['events']) {
                         html += `
-                        <div class="event">
+                        <div class="event" onclick="load_record('${e['id']}')">
                             <div class="name">${ e['name'] }</div>
                             <div class="id">${ e['id'] }</div>
                             <div class="time">${ e['time'] }</div>
@@ -58,12 +61,8 @@ switch (data['action']) {
         break;
 
     case 'new_record':
-        alert('creado: ok');
-        // Does not break, so continues with load_record
-
     case 'load_record':
         $('.--workarea-content').html(data['html']); // get form html
-        current['patient'] = data['patient'];
         break;
 
     case 'save_record':

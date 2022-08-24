@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import SocketIO, emit
 
 from scripts.user import User
-from scripts.records import History, Patient
+from scripts.records import ClinicalEvent, History, Patient
 
 import os
 
@@ -85,6 +85,22 @@ def socket_event(data):
         if data['action'] == 'new_patient':
             Patient(**data['patient'])
             response['patients'] = History(data['patient']).patients
+
+
+        
+        sections = [
+            'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
+            'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
+        ]
+
+        if data['action'] == 'new_record':
+            Patient.load(data['patient_id']).add_event(ClinicalEvent(data['record_type'], logged_user().data["name"]))
+            response['html'] = render_template('clinical_events/odontologia.html', sections=sections)
+
+        if data['action'] == 'load_record':
+            clev = ClinicalEvent.get_dict(f"clev-{data['record_id']}")
+            response['html'] = render_template('clinical_events/odontologia.html',
+                sections=sections, data=clev['data'])
             
         emit('response_event', response)
     except Exception as ex:
