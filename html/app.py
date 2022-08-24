@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
-from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import SocketIO, emit
 
 from scripts.user import User
+from scripts.records import History
 
 import os
 
@@ -76,6 +77,11 @@ def dashboard():
 @socketio.on('socket_event')
 def socket_event(data):
     try:
-        emit('response_event', {'result': 'ok'})
+        response = { 'action': data['action'], 'result': 'ok' }
+        
+        if data['action'] == 'load_history':
+            response['patients'] = History(data['filter']).patients
+            
+        emit('response_event', response)
     except Exception as ex:
         emit('response_event', {'error': ex})

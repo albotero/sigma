@@ -24,62 +24,33 @@
       <h2>Buscar Paciente</h2>
       <form id="patient">
         <div class="input-group">
-          <input type="text" id="patient[surname]" placeholder="-">
+          <input type="text" name="surname" placeholder="-">
           <label>Nombre(s)</label>
         </div>
         <div class="input-group">
-          <input type="text" id="patient[lastname]" placeholder="-">
+          <input type="text" name="lastname" placeholder="-">
           <label>Apellido(s)</label>
         </div>
         <div class="input-group">
-          <input type="text" id="patient[id]" placeholder="-">
+          <input type="text" name="id" placeholder="-">
           <label>ID</label>
         </div>
         <div class="buttons">
-          <input type="button" value="Buscar">
+          <input type="button" value="Buscar" onclick="load_history()">
           <input type="button" value="Nuevo paciente">
         </div>
       </form>
     </div>
-    <div class="--history">
-      
-      {% for i in range(1, 16) %}
 
-      <div class="--history-patient">
-        <div class="title">
-          <div class="name">Paciente {{ i }}</div>
-          <div class="id">CC 34556789</div>
-        </div>
-        <div class="event">
-          <div class="name">evolución</div>
-          <div class="id">{{ 100+16-i }}4</div>
-          <div class="time">12/08/2022 12:35 pm</div>
-          <div class="user">Vanessa Jiménez (Periodoncia)</div>
-        </div>
-        <div class="event">
-          <div class="name">evolución</div>
-          <div class="id">{{ 100+16-i }}3</div>
-          <div class="time">12/08/2022 12:35 pm</div>
-          <div class="user">Vanessa Jiménez (Periodoncia)</div>
-        </div>
-        <div class="event">
-          <div class="name">ingreso</div>
-          <div class="id">{{ 100+16-i }}2</div>
-          <div class="time">12/08/2022 12:35 pm</div>
-          <div class="user">Vanessa Jiménez (Periodoncia)</div>
-        </div>
-      </div>
+    <div class="--history"></div>
 
-      {% endfor %}
-
-    </div>
     <div class="--workarea">
       <div class="--workarea-content">
         {% with sections=[
           'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
           'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
           ] %}
-          {% include 'clinical_events/odontologia.html' %}
+          <!--{$$$$$% include 'clinical_events/odontologia.html' %}-->
         {% endwith %}
       </div>
     </div>

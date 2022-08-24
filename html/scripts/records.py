@@ -3,6 +3,8 @@ import uuid
 import pickle
 
 
+patient_index_path = '../user_data/patients/index'
+
 class Data:
 
     def save_to_file(datatype, dataobject):
@@ -23,7 +25,7 @@ class ClinicalEvent:
     
     def __init__(self):
         self.id = f'clev-{uuid.uuid4()}'
-        self.time = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
+        self.time = datetime.now().strftime('%Y-%m-%d, %I:%M:%S %p')
         self.sign = None
         self.data = {}
         self.save()
@@ -37,9 +39,15 @@ class ClinicalEvent:
 
 class Patient:
     
-    def __init__(self, id):
+    def __init__(self, id, surname, lastname):
         self.id = id
         self.events = []
+        self.add_to_index([id, surname, lastname])
+
+    def add_to_index(self, data):
+        with open(patient_index_path, 'a') as file:
+            file.write('|'.join(data))
+            file.write('\n')
 
     def add_event(self, event: ClinicalEvent):
         self.events += [(event.id, event.time)]
@@ -54,3 +62,38 @@ class Patient:
 
     def load(id):
         return Data.load_from_file('patients', id)
+
+    def get_dict(self, surname, lastname):        
+        return {
+            'surname': surname,
+            'lastname': lastname,
+            'id': self.id,
+            'events': self.events
+        }
+
+
+class History:
+    def __init__(self, filter):
+        '''Creates self.patients list to show in frontend history'''
+        self.patients = []
+        self.filter = filter
+        self.filter_patients()
+        
+        # If a patient has been filtered show that patient's history
+        if len(self.filtered) == 1:
+            self.patients += [ Patient.load(self.filtered[0][0]).get_dict(*self.filtered[0][1:]) ]
+        # If there is more than 1 patient filtered only show their names/id
+        if len(self.filtered) > 1:
+            for surname, lastname, id in self.filtered:
+                self.patients += [{ 'id': id, 'surname': surname, 'lastname': lastname }]
+
+    def filter_patients(self):
+        '''Return list of patients with frontend filter'''
+        self.filtered = []
+        try:
+            with open(patient_index_path, 'r') as file:
+                for line in file:
+                    if all([ x in line for x in self.filter.values() if x ]):
+                        self.filtered += [ line.strip().split('|') ]
+        except IOError:
+            return ''
