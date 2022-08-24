@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import SocketIO, emit
 
 from scripts.user import User
-from scripts.records import History
+from scripts.records import History, Patient
 
 import os
 
@@ -81,6 +81,10 @@ def socket_event(data):
         
         if data['action'] == 'load_history':
             response['patients'] = History(data['filter']).patients
+
+        if data['action'] == 'new_patient':
+            Patient(**data['patient'])
+            response['patients'] = History(data['patient']).patients
             
         emit('response_event', response)
     except Exception as ex:

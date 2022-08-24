@@ -1,6 +1,7 @@
 from datetime import datetime
-import uuid
 import pickle
+import os
+import re
 
 
 patient_index_path = '../user_data/patients/index'
@@ -23,12 +24,19 @@ class Data:
 
 class ClinicalEvent:
     
-    def __init__(self):
-        self.id = f'clev-{uuid.uuid4()}'
-        self.time = datetime.now().strftime('%Y-%m-%d, %I:%M:%S %p')
+    def __init__(self, name, user):
+        self.id = self.generate_id()
+        self.name = name
+        self.time = datetime.now().strftime('%-d/%m/%Y %-I:%M %p')
+        self.user = user
         self.sign = None
         self.data = {}
         self.save()
+
+    def generate_id(self):
+        clev = [ int(re.split(r'-', c)[1]) for c in os.listdir('../user_data/clinicalevents') if 'clev' in c ]
+        curr_index = max(clev) if len(clev) else 0
+        return f'clev-{curr_index + 1:04d}'
 
     def save(self):
         Data.save_to_file('clinicalevents', self)
@@ -36,13 +44,40 @@ class ClinicalEvent:
     def load(id):
         return Data.load_from_file('clinicalevents', id)
 
+    def get_dict(id):
+        evt = ClinicalEvent.load(id)
+        return {
+            'id': id.replace('clev-', ''),
+            'name': evt.name,
+            'time': evt.time,
+            'user': evt.user,
+            'sign': evt.sign,
+            'data': evt.data
+        }
+
+
+class PatientExistsException(Exception):
+    def __init__(self, id):
+        self.id = id
+
+    def __str__(self):
+        return f'El paciente con ID: "{self.id}" ya existe, no se puede crear nuevamente'
 
 class Patient:
     
     def __init__(self, id, surname, lastname):
-        self.id = id
-        self.events = []
-        self.add_to_index([id, surname, lastname])
+        # Only creates patient if not exist
+        try:
+            Patient.load(id)
+            raise PatientExistsException(id)
+        except IOError:        
+            self.id = id
+            self.events = []
+            self.add_to_index([id, surname, lastname])
+            self.save()
+        except PatientExistsException as e:
+            print(f'Error: {e}')
+            #Patient.load(id).add_event(ClinicalEvent('Evolución Periodoncia', 'Dra. Vanessa Jiménez'))
 
     def add_to_index(self, data):
         with open(patient_index_path, 'a') as file:
@@ -50,7 +85,7 @@ class Patient:
             file.write('\n')
 
     def add_event(self, event: ClinicalEvent):
-        self.events += [(event.id, event.time)]
+        self.events += [event.id]
         self.save()
 
     def del_event(self, eventid):
@@ -63,12 +98,12 @@ class Patient:
     def load(id):
         return Data.load_from_file('patients', id)
 
-    def get_dict(self, surname, lastname):        
+    def get_dict(self, surname = None, lastname = None):
         return {
             'surname': surname,
             'lastname': lastname,
             'id': self.id,
-            'events': self.events
+            'events': [ ClinicalEvent.get_dict(e) for e in sorted(self.events, reverse=True) ]
         }
 
 
@@ -82,9 +117,10 @@ class History:
         # If a patient has been filtered show that patient's history
         if len(self.filtered) == 1:
             self.patients += [ Patient.load(self.filtered[0][0]).get_dict(*self.filtered[0][1:]) ]
+        
         # If there is more than 1 patient filtered only show their names/id
         if len(self.filtered) > 1:
-            for surname, lastname, id in self.filtered:
+            for id, surname, lastname in self.filtered:
                 self.patients += [{ 'id': id, 'surname': surname, 'lastname': lastname }]
 
     def filter_patients(self):

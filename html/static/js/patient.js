@@ -17,7 +17,8 @@ var build_filter = (patient, items) => {
 var socket = io();
 var socket_event = (data) => socket.emit('socket_event', data);
 
-var load_history = (filter) => {console.log(filter); socket_event({ 'action': 'load_history', 'filter': filter || getFormData('patient') });}
+var load_history = (filter) => socket_event({ 'action': 'load_history', 'filter': filter || getFormData('patient') });
+var new_patient = () => socket_event({ 'action': 'new_patient', 'patient': { 'id': $('#patient input[name=id]').val(), 'surname': $('#patient input[name=surname]').val(), 'lastname': $('#patient input[name=lastname]').val() } });
 var new_record = (patient_id, record_type) => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type});
 var load_record = (record_id) => socket_event({'action': 'load_record', 'record_id': record_id});
 var save_record = (record_id) => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
@@ -28,13 +29,14 @@ var current = {};
 socket.on('response_event', (data) => {
 switch (data['action']) {
     
-    case 'load_history':        
+    case 'load_history':
+    case 'new_patient':     
         let html = '';
         if (data['patients']) {
             for (p of data['patients']) {
                 html += `
                 <div class="--history-patient">
-                    <div class="title" onclick="load_history(${ build_filter(p, ['surname', 'lastname', 'id']) })">
+                    <div class="title" onclick="load_history(${ build_filter(p, ['id', 'surname', 'lastname']) })">
                         <div class="name">${ p['surname'] } ${ p['lastname'] }</div>
                         <div class="id">${ p['id'] }</div>
                     </div>`;
