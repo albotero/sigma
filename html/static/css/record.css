@@ -1,8 +1,6 @@
 @charset "UTF-8";
 .--section {
   background-color: rgb(208, 208, 222);
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 10pt;
   overflow: hidden;
   border-radius: 10pt;
   width: 92%;
@@ -11,6 +9,8 @@
 }
 .--section * {
   text-transform: uppercase;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 10pt;
 }
 .--section .--section-title {
   background-color: rgb(67, 90, 134);

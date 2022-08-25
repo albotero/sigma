@@ -9,6 +9,7 @@
       </div>
       <div class="item user">
         <a>{{ user.id }}</a>
+        <script type="text/javascript">const _user_ = '{{ user.id }}';</script>
         <ul>
           {% if 'admin' in user.data['roles'] %}
             <li class="admin" onclick="window.location = `{{ url_for('dashboard') }}`;"><a>Administrador</a></li>

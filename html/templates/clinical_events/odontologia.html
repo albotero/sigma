@@ -4,7 +4,12 @@
 {% set data = clev.data if clev else {} %}
 {% set sections = clev.sections if clev else [] %}
 
-<input type="button" onclick="save_record('{{ clev.id }}')" value="save">
+<div class="--clev-info">
+    <div class="--info-id"></div>
+    <div class="--info-time"></div>
+    <div class="--info-user"></div>
+    <div class="--info-save"></div>
+</div>
 
 {% if 'mc' in sections %}
     <div class="--section">

@@ -87,12 +87,17 @@ def socket_event(data):
             response['patients'] = History(data['patient']).patients
 
         if data['action'] == 'new_record':
-            clev = ClinicalEvent(data['record_type'], logged_user().data["name"])
+            clev = ClinicalEvent(data['record_type'], logged_user())
             Patient.load(data['patient_id']).add_event(clev)
+            response['record_id'] = clev.id
             response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
 
         if data['action'] == 'load_record':
             clev = ClinicalEvent.load(data['record_id'])
+            response['record_id'] = clev.id
+            response['sign'] = clev.sign
+            response['user'] = clev.user.id
+            response['time'] = clev.time
             response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
 
         if data['action'] == 'save_record':

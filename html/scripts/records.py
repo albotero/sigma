@@ -38,7 +38,7 @@ class ClinicalEvent:
             'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
             'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
         ]
-        
+
         self.save()
 
     def generate_id(self):
@@ -57,7 +57,7 @@ class ClinicalEvent:
             'id': self.id.replace('clev-', ''),
             'name': self.name,
             'time': self.time,
-            'user': self.user,
+            'user': self.user.data["name"],
             'sign': self.sign,
             'data': self.data
         }
