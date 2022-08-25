@@ -1,15 +1,19 @@
 <form id="record">
 
 {% set empty = '-' %}
+{% set data = clev.data if clev else {} %}
+{% set sections = clev.sections if clev else [] %}
+
+<input type="button" onclick="save_record('{{ clev.id }}')" value="save">
 
 {% if 'mc' in sections %}
     <div class="--section">
         <div class="--section-title">motivo de consulta</div>
         <div class="--section-content">
-            {% if data %}
-                {{ data.get('mc', empty)}}
+            {% if clev and clev.sign %}
+                {{ data.get('mc', empty) }}
             {% else %}
-                <input type="text" name="data[mc]">
+                <input type="text" name="mc" value="{{ data.get('mc', '') }}">
             {% endif %}
         </div>
     </div>
@@ -20,10 +24,10 @@
     <div class="--section">
         <div class="--section-title">enfermedad actual</div>
         <div class="--section-content">
-            {% if data %}
+            {% if clev and clev.sign %}
                 {{ data.get('ea', empty) }}
             {% else %}
-                <textarea name="data[ea]"></textarea>
+                <textarea name="ea">{{ data.get('ea', '') }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -50,10 +54,11 @@
             <div class="--section-content --section-columns --section-columns-4">
                 {% for antec_item in antec_list %}
                     <div class="--list-title">{{ antec_item }}</div>
-                    {% if data %}
-                        {{ data['antecedentes'].get(antec_item, empty) }}
+                    {% if clev and clev.sign %}
+                        {{ data.get('antecedentes' + antec_item, antecedentes_neg) }}
                     {% else %}
-                        <input type="text" name="data[antecedentes][{{ antec_item }}]" value="{{ antecedentes_neg }}">
+                        <input type="text" name="antecedentes_{{ antec_item }}"
+                            value="{{ data.get('antecedentes' + antec_item, antecedentes_neg) }}">
                         <div></div>
                     {% endif %}
                 {% endfor %}
@@ -64,8 +69,8 @@
 
 
 {% if 'hist_odont' in sections %}
-    {% set hist_odont_neg = 'ninguna' %}
-    {% set hist_odont_dict = {
+    {% set ho_neg = 'ninguna' %}
+    {% set ho_dict = {
         'general': 'ha sido sometido a anestesia general',
         'local': 'le han aplicado anestesia local',
         'exodoncia': 'le han realizado alguna exodoncia',
@@ -75,22 +80,23 @@
     <div class="--section">
         <div class="--section-title">historia odontológica</div>
         <div class="--section-content --section-columns --section-columns-3a">
-            {% for item, text in hist_odont_dict.items() %}
+            {% for item, text in ho_dict.items() %}
                 <label>
                     <div class="--list-title">{{ item }}</div>
-                    {% if data %}
-                        {{ 'si' if data['hist_odont'].get(item) else 'no' }}
+                    {% if clev and clev.sign %}
+                        {{ 'si' if data.get('ho_' + item) else 'no' }}
                     {% else %}
-                        <input type="checkbox" name="data[hist_odont][{{ item }}]">
+                        <input type="checkbox" name="ho_{{ item }}"
+                            {{ 'checked' if data.get('ho_' + item) }}>
                     {% endif %}
                 </label>
                 <div></div>
                 <div class="--list-title">{{ 'observaciones' if item in ['hemorragia'] else 'complicaciones' }}</div>
-                {% if data %}
-                    {{ data['hist_odont'].get('obs_'+item, hist_odont_neg) }}
+                {% if clev and clev.sign %}
+                    {{ data.get('ho_obs_' + item, ho_neg) }}
                 {% else %}
-                    <input type="text" name="data[hist_odont][obs_{{ item }}]"
-                        value="{{ hist_odont_neg }}" style="grid-column: 4/7;">
+                    <input type="text" name="ho_obs_{{ item }}" style="grid-column: 4/7;"
+                        value="{{ data.get('ho_obs_' + item, ho_neg) }}">
                 {% endif %}
             {% endfor %}
         </div>
@@ -100,7 +106,10 @@
 
 {% if 'tto_previo' in sections %}
     {% set tto_previo_neg = 'buena' %}
-    {% set tto_previo_list = [ 'prevención', 'operatoria', 'cirugía', 'endodoncia', 'periodoncia', 'rehabilitación', 'ortodoncia' ] %}
+    {% set tto_previo_list = [
+        'prevención', 'operatoria', 'cirugía', 'endodoncia',
+        'periodoncia', 'rehabilitación', 'ortodoncia'
+        ] %}
     {% set tto_previo_actitud = {
         'previa': 'actitud ante los tratamientos previos',
         'actual': 'actitud ante el tratamiento actual'
@@ -112,10 +121,11 @@
             {% for item in tto_previo_list %}
                 <label>
                     <div class="--list-title">{{ item }}</div>
-                    {% if data %}
-                        {{ 'si' if data['tto_previo'].get(item) else 'no' }}
+                    {% if clev and clev.sign %}
+                        {{ 'si' if data.get('tto_previo_' + item) else 'no' }}
                     {% else %}
-                        <input type="checkbox" name="data[tto_previo][{{ item }}]">
+                        <input type="checkbox" name="tto_previo_{{ item }}"
+                            {{ 'checked' if data.get('tto_previo_' + item) }}>
                     {% endif %}
                 </label>
             {% endfor %}
@@ -123,11 +133,11 @@
         <div class="--section-content --section-columns">
             {% for item, text in tto_previo_actitud.items() %}
                 <div class="--list-title">{{ text }}</div>
-                {% if data %}
-                    {{ data['tto_previo'].get(item, tto_previo_neg) }}
+                {% if clev and clev.sign %}
+                    {{ data.get('tto_previo_' + item) }}
                 {% else %}
-                    <input type="text" name="data[tto_previo][{{ item }}]"
-                        value="{{ tto_previo_neg }}" style="grid-column: 2/5;">
+                    <input type="text" name="tto_previo_{{ item }}" style="grid-column: 2/5;"
+                        value="{{ data.get('tto_previo_' + item, tto_previo_neg) }}">
                 {% endif %}
             {% endfor %}
         </div>
@@ -139,10 +149,10 @@
     <div class="--section">
         <div class="--section-title">evolución</div>
         <div class="--section-content">
-            {% if data %}
+            {% if clev and clev.sign %}
                 {{ data.get('evolucion', empty) }}
             {% else %}
-                <textarea name="data[evolucion]"></textarea>
+                <textarea name="evolucion">{{ data.get('evolucion', '') }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -164,10 +174,11 @@
                 <div>
                     <label>
                         <div class="--list-title">{{ item }}</div>
-                        {% if data %}
-                            {{ 'si' if data['salud_oral'].get(item) else 'no' }}
+                        {% if clev and clev.sign %}
+                            {{ 'si' if data.get('salud_oral_' + item) else 'no' }}
                         {% else %}
-                            <input type="checkbox" name="data[salud_oral][{{ item }}]">
+                            <input type="checkbox" name="salud_oral_{{ item }}"
+                                {{ 'checked' if data.get('salud_oral_' + item) }}>
                         {% endif %}
                     </label>
                 </div>
@@ -187,13 +198,13 @@
         <div class="--section-content --section-columns --section-columns-6a">
             {% for item in higiene_list %}
                 <div class="--list-title">{{ item }}</div>
-                {% if data %}
-                    {{ data['higiene'].get(item) }}
+                {% if clev and clev.sign %}
+                    {{ data.get('higiene_' + item) }}
                 {% else %}
-                    <select name="data[higiene][{{ item }}]">
+                    <select name="higiene_{{ item }}">
                         {% set options = higiene_options_a if item in ['higiene'] else higiene_options_b %}
                         {% for opt in options %}
-                            <option value="{{ opt }}">{{ opt }}</option>
+                            <option value="{{ opt }}" {{ 'selected' if data.get('higiene_' + item) }}>{{ opt }}</option>
                         {% endfor %}
                     </select>
                 {% endif %}
@@ -210,20 +221,39 @@
         <div class="--section-content">
             <div class="--section-columns --section-columns-6b">
                 <div class="--list-title">peso (kg)</div>
-                <input type="text" name="data[clinico][peso]" id="weight" onchange="update_bmi();">
+                {% if clev and clev.sign %}
+                    {{ data.get('clinico_peso') }}
+                {% else %}
+                    <input type="text" name="clinico_peso" id="weight"
+                        value="{{ data.get('clinico_peso', '') }}">
+                {% endif %}
                 <div></div>
                 <div class="--list-title">talla (cm)</div>
-                <input type="text" name="data[clinico][talla]" id="height" onchange="update_bmi();">
+                {% if clev and clev.sign %}
+                    {{ data.get('clinico_talla') }}
+                {% else %}
+                    <input type="text" name="clinico_talla" id="height"
+                        value="{{ data.get('clinico_talla', '') }}">
+                {% endif %}
                 <div></div>
                 <div class="--list-title">imc</div>
                 <div id="bmi">-</div>
             </div>
             <div class="--section-columns --section-columns-6b">
                 <div class="--list-title">fc (lpm)</div>
-                <input type="text" name="data[clinico][fc]">
+                {% if clev and clev.sign %}
+                    {{ data.get('clinico_fc') }}
+                {% else %}
+                    <input type="text" name="clinico_fc" value="{{ data.get('clinico_fc', '') }}">
+                {% endif %}
                 <div></div>
                 <div class="--list-title">pa (mmhg)</div>
-                <input type="text" name="data[clinico][pa]" id="nibp" onchange="update_map();">
+                {% if clev and clev.sign %}
+                    {{ data.get('clinico_pa') }}
+                {% else %}
+                    <input type="text" name="clinico_pa"
+                        value="{{ data.get('clinico_pa', '') }}">
+                {% endif %}
                 <div></div>
                 <div class="--list-title">pam</div>
                 <div id="map">-</div>
@@ -231,21 +261,9 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function update_bmi() {
-            let bmi = $('#weight').val()/Math.pow($('#height').val()/100, 2);
-            $('#bmi').text((bmi > 0 && bmi !== Infinity) ? bmi.toFixed(1) : '-');
-        }
 
-        function update_map() {
-            let nibp = $('#nibp').val().split('/');
-            let map = (nibp[0] * 1 + nibp[1] * 2) / 3;
-            $('#map').text((nibp.length == 2 && nibp.every(n => n > 0)) ? map.toFixed(0) : '-');
-        }
-    </script>
-
-    {% set intraoral_options = [ 'no evaluado', 'normal', 'alterado' ] %}
-    {% set intraoral_list = [
+    {% set io_options = [ 'no evaluado', 'normal', 'alterado' ] %}
+    {% set io_list = [
         'labios', 'carrillos', 'surco vestibular', 'encía', 'reborde alveolar',
         'lengua', 'piso de boca', 'frenillos', 'paladar duro', 'paladar blando',
         'amígdalas / orofaringe', 'glándulas salivales'
@@ -253,31 +271,30 @@
     <div class="--section">
         <div class="--section-title">examen intraoral</div>
         <div class="--section-content">
-            {% for item in intraoral_list %}
+            {% for item in io_list %}
                 <div class="--section-columns --section-columns-3b">
                     <div class="--list-title">{{ item }}</div>
                     <div class="--horizontal">
-                        {% if data %}
-                            {{ data['intraoral'].get(item) }}
+                        {% if clev and clev.sign %}
+                            {{ data.get('io_' + item) }}
                         {% else %}
-                                {% for opt in intraoral_options %}
-                                    <label>
-                                        <input type="radio"
-                                            name="data[intraoral][{{ item }}]"
-                                            value="{{ opt }}"
-                                            {{ 'checked' if opt==intraoral_options[0] }}>
-                                        {{ opt }}
-                                    </label>
-                                {% endfor %}
+                            {% for opt in range(io_options | length) %}
+                                <label>
+                                    <input type="radio" name="io_{{ item }}" value="{{ opt }}"
+                                        {{ 'checked' if data.get('io_' + item, 0) == opt }}>
+                                    {{ io_options[opt] }}
+                                </label>
+                            {% endfor %}
                         {% endif %}
                     </div>
                     <div></div>
                     <div class="--horizontal">
                         <div class="--list-title">detalle</div>
-                        {% if data %}
-                            {{ data['intraoral'].get('obs_'+item, empty) }}
+                        {% if clev and clev.sign %}
+                            {{ data.get('io_obs_' + item) }}
                         {% else %}
-                            <input type="text" id="io_obs_{{ item }}" name="data[intraoral][obs_{{ item }}]">
+                            <input type="text" name="io_obs_{{ item }}"
+                                value="{{ data.get('io_obs_' + item, empty) }}">
                         {% endif %}
                     </div>
                 </div>
@@ -303,10 +320,10 @@
     <div class="--section">
         <div class="--section-title">descripción de procedimiento</div>
         <div class="--section-content">
-            {% if data %}
+            {% if clev and clev.sign %}
                 {{ data.get('procedimiento', empty) }}
             {% else %}
-                <textarea name="data[procedimiento]"></textarea>
+                <textarea name="procedimiento">{{ data.get('procedimiento', '') }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -317,10 +334,10 @@
     <div class="--section">
         <div class="--section-title">diagnóstico</div>
         <div class="--section-content">
-            {% if data %}
-                {{ data.get('diagnostico', empty)}}
+            {% if clev and clev.sign %}
+                {{ data.get('diagnostico', empty) }}
             {% else %}
-                <input type="text" name="data[diagnostico]">
+                <textarea name="diagnostico">{{ data.get('diagnostico', '') }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -331,10 +348,10 @@
     <div class="--section">
         <div class="--section-title">plan</div>
         <div class="--section-content">
-            {% if data %}
+            {% if clev and clev.sign %}
                 {{ data.get('plan', empty) }}
             {% else %}
-                <textarea name="data[plan]"></textarea>
+                <textarea name="plan">{{ data.get('plan', '') }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -345,13 +362,61 @@
     <div class="--section">
         <div class="--section-title">fórmula</div>
         <div class="--section-content">
-            {% if data %}
+            {% if clev and clev.sign %}
                 {{ data.get('formula', empty) }}
             {% else %}
-                <textarea name="data[formula]"></textarea>
+                <textarea name="formula">{{ data.get('formula', '') }}</textarea>
             {% endif %}
         </div>
     </div>
 {% endif %}
 
 </form>
+
+<script type="text/javascript">
+    function handler(element, func) {
+        func();
+        $(element).change(func);
+    }
+
+    function update_obs(name, enabled, def=null) {
+        let obs = $(`input[name='${name}']`);
+        obs.prop('disabled', !enabled);
+        if (!enabled) obs.val('-');
+        if (enabled && def) obs.val(def);
+    }
+
+    // Update checks in HO
+    $('input[type=checkbox][name^=ho_]').each((i, e) => {
+        handler(e, () => update_obs(
+            $(e).prop('name').replace('ho_', 'ho_obs_'),
+            $(e).prop('checked'),
+            '{{ ho_neg }}'
+        ));
+    });
+
+    // Update radios in IO
+    $('input[type=radio][name^=io_]').each((i, e) => {
+        handler(e, () => update_obs(
+            $(e).prop('name').replace('io_', 'io_obs_'),
+            $(e).prop('checked') && $(e).val() > 0
+        ));
+    });
+
+    // Update BMI
+    $('#weight,#height').each((i, e) => {
+        handler(e, () => {
+            let bmi = $('#weight').val()/Math.pow($('#height').val()/100, 2);
+            $('#bmi').text((bmi > 0 && bmi !== Infinity) ? bmi.toFixed(1) : '-');
+        });
+    });
+
+    // Update MAP
+    $('input[name=clinico_pa]').each((i, e) => {
+        handler(e, () => {
+            let nibp = $(e).val().split('/');
+            let map = (nibp[0] * 1 + nibp[1] * 2) / 3;
+            $('#map').text((nibp.length == 2 && nibp.every(n => n > 0)) ? map.toFixed(0) : '-');
+        });
+    });
+</script>

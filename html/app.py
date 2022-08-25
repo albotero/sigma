@@ -86,21 +86,14 @@ def socket_event(data):
             Patient(**data['patient'])
             response['patients'] = History(data['patient']).patients
 
-
-        
-        sections = [
-            'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
-            'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
-        ]
-
         if data['action'] == 'new_record':
-            Patient.load(data['patient_id']).add_event(ClinicalEvent(data['record_type'], logged_user().data["name"]))
-            response['html'] = render_template('clinical_events/odontologia.html', sections=sections)
+            clev = ClinicalEvent(data['record_type'], logged_user().data["name"])
+            Patient.load(data['patient_id']).add_event(clev)
+            response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
 
         if data['action'] == 'load_record':
-            clev = ClinicalEvent.get_dict(f"clev-{data['record_id']}")
-            response['html'] = render_template('clinical_events/odontologia.html',
-                sections=sections, data=clev['data'])
+            clev = ClinicalEvent.load(data['record_id'])
+            response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
             
         emit('response_event', response)
     except Exception as ex:

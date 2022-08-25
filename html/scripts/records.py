@@ -29,8 +29,16 @@ class ClinicalEvent:
         self.name = name
         self.time = datetime.now().strftime('%-d/%m/%Y %-I:%M %p')
         self.user = user
+
         self.sign = None
         self.data = {}
+
+        self.template = 'odontologia'
+        self.sections = [
+            'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
+            'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
+        ]
+        
         self.save()
 
     def generate_id(self):
@@ -41,18 +49,17 @@ class ClinicalEvent:
     def save(self):
         Data.save_to_file('clinicalevents', self)
 
-    def load(id):
-        return Data.load_from_file('clinicalevents', id)
+    def load(id, fullname=False):
+        return Data.load_from_file('clinicalevents', id if fullname else f'clev-{id}')
 
-    def get_dict(id):
-        evt = ClinicalEvent.load(id)
+    def get_dict(self):
         return {
-            'id': id.replace('clev-', ''),
-            'name': evt.name,
-            'time': evt.time,
-            'user': evt.user,
-            'sign': evt.sign,
-            'data': evt.data
+            'id': self.id.replace('clev-', ''),
+            'name': self.name,
+            'time': self.time,
+            'user': self.user,
+            'sign': self.sign,
+            'data': self.data
         }
 
 
@@ -102,7 +109,7 @@ class Patient:
             'id': self.id,
             'surname': surname,
             'lastname': lastname,
-            'events': [ ClinicalEvent.get_dict(e) for e in sorted(self.events, reverse=True) ]
+            'events': [ ClinicalEvent.load(e, fullname=True).get_dict() for e in sorted(self.events, reverse=True) ]
         }
 
 
