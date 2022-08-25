@@ -94,6 +94,11 @@ def socket_event(data):
         if data['action'] == 'load_record':
             clev = ClinicalEvent.load(data['record_id'])
             response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
+
+        if data['action'] == 'save_record':
+            clev = ClinicalEvent.load(data['record_id'], fullname=True)
+            clev.data = data['data']
+            clev.save()
             
         emit('response_event', response)
     except Exception as ex:

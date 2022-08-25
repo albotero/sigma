@@ -11,9 +11,9 @@
         <div class="--section-title">motivo de consulta</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('mc', empty) }}
+                {{ data.get('mc') or empty }}
             {% else %}
-                <input type="text" name="mc" value="{{ data.get('mc', '') }}">
+                <input type="text" name="mc" value="{{ data.get('mc') or '' }}">
             {% endif %}
         </div>
     </div>
@@ -25,9 +25,9 @@
         <div class="--section-title">enfermedad actual</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('ea', empty) }}
+                {{ data.get('ea') or empty }}
             {% else %}
-                <textarea name="ea">{{ data.get('ea', '') }}</textarea>
+                <textarea name="ea">{{ data.get('ea') or '' }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -55,10 +55,10 @@
                 {% for antec_item in antec_list %}
                     <div class="--list-title">{{ antec_item }}</div>
                     {% if clev and clev.sign %}
-                        {{ data.get('antecedentes' + antec_item, antecedentes_neg) }}
+                        {{ data.get(section + '_' + antec_item) or empty }}
                     {% else %}
-                        <input type="text" name="antecedentes_{{ antec_item }}"
-                            value="{{ data.get('antecedentes' + antec_item, antecedentes_neg) }}">
+                        <input type="text" name="{{ section }}_{{ antec_item }}"
+                            value="{{ data.get(section + '_' + antec_item) or antecedentes_neg }}">
                         <div></div>
                     {% endif %}
                 {% endfor %}
@@ -93,10 +93,10 @@
                 <div></div>
                 <div class="--list-title">{{ 'observaciones' if item in ['hemorragia'] else 'complicaciones' }}</div>
                 {% if clev and clev.sign %}
-                    {{ data.get('ho_obs_' + item, ho_neg) }}
+                    {{ data.get('ho_obs_' + item) or empty }}
                 {% else %}
                     <input type="text" name="ho_obs_{{ item }}" style="grid-column: 4/7;"
-                        value="{{ data.get('ho_obs_' + item, ho_neg) }}">
+                        value="{{ data.get('ho_obs_' + item) or ho_neg }}">
                 {% endif %}
             {% endfor %}
         </div>
@@ -134,10 +134,10 @@
             {% for item, text in tto_previo_actitud.items() %}
                 <div class="--list-title">{{ text }}</div>
                 {% if clev and clev.sign %}
-                    {{ data.get('tto_previo_' + item) }}
+                    {{ data.get('tto_previo_' + item) or empty }}
                 {% else %}
                     <input type="text" name="tto_previo_{{ item }}" style="grid-column: 2/5;"
-                        value="{{ data.get('tto_previo_' + item, tto_previo_neg) }}">
+                        value="{{ data.get('tto_previo_' + item) or tto_previo_neg }}">
                 {% endif %}
             {% endfor %}
         </div>
@@ -150,9 +150,9 @@
         <div class="--section-title">evolución</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('evolucion', empty) }}
+                {{ data.get('evolucion') or empty }}
             {% else %}
-                <textarea name="evolucion">{{ data.get('evolucion', '') }}</textarea>
+                <textarea name="evolucion">{{ data.get('evolucion') or '' }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -204,7 +204,7 @@
                     <select name="higiene_{{ item }}">
                         {% set options = higiene_options_a if item in ['higiene'] else higiene_options_b %}
                         {% for opt in options %}
-                            <option value="{{ opt }}" {{ 'selected' if data.get('higiene_' + item) }}>{{ opt }}</option>
+                            <option value="{{ opt }}" {{ 'selected' if data.get('higiene_' + item) == opt }}>{{ opt }}</option>
                         {% endfor %}
                     </select>
                 {% endif %}
@@ -222,18 +222,18 @@
             <div class="--section-columns --section-columns-6b">
                 <div class="--list-title">peso (kg)</div>
                 {% if clev and clev.sign %}
-                    {{ data.get('clinico_peso') }}
+                    {{ data.get('clinico_peso') or empty }}
                 {% else %}
                     <input type="text" name="clinico_peso" id="weight"
-                        value="{{ data.get('clinico_peso', '') }}">
+                        value="{{ data.get('clinico_peso') or '' }}">
                 {% endif %}
                 <div></div>
                 <div class="--list-title">talla (cm)</div>
                 {% if clev and clev.sign %}
-                    {{ data.get('clinico_talla') }}
+                    {{ data.get('clinico_talla') or empty }}
                 {% else %}
                     <input type="text" name="clinico_talla" id="height"
-                        value="{{ data.get('clinico_talla', '') }}">
+                        value="{{ data.get('clinico_talla') or '' }}">
                 {% endif %}
                 <div></div>
                 <div class="--list-title">imc</div>
@@ -242,17 +242,18 @@
             <div class="--section-columns --section-columns-6b">
                 <div class="--list-title">fc (lpm)</div>
                 {% if clev and clev.sign %}
-                    {{ data.get('clinico_fc') }}
+                    {{ data.get('clinico_fc') or empty }}
                 {% else %}
-                    <input type="text" name="clinico_fc" value="{{ data.get('clinico_fc', '') }}">
+                    <input type="text" name="clinico_fc"
+                        value="{{ data.get('clinico_fc') or '' }}">
                 {% endif %}
                 <div></div>
                 <div class="--list-title">pa (mmhg)</div>
                 {% if clev and clev.sign %}
-                    {{ data.get('clinico_pa') }}
+                    {{ data.get('clinico_pa') or empty }}
                 {% else %}
                     <input type="text" name="clinico_pa"
-                        value="{{ data.get('clinico_pa', '') }}">
+                        value="{{ data.get('clinico_pa') or '/' }}">
                 {% endif %}
                 <div></div>
                 <div class="--list-title">pam</div>
@@ -276,12 +277,12 @@
                     <div class="--list-title">{{ item }}</div>
                     <div class="--horizontal">
                         {% if clev and clev.sign %}
-                            {{ data.get('io_' + item) }}
+                            {{ io_options[ data.get('io_' + item) or 0 ] }}
                         {% else %}
                             {% for opt in range(io_options | length) %}
                                 <label>
                                     <input type="radio" name="io_{{ item }}" value="{{ opt }}"
-                                        {{ 'checked' if data.get('io_' + item, 0) == opt }}>
+                                        {{ 'checked' if data.get('io_' + item)|int or 0 == opt }}>
                                     {{ io_options[opt] }}
                                 </label>
                             {% endfor %}
@@ -291,10 +292,10 @@
                     <div class="--horizontal">
                         <div class="--list-title">detalle</div>
                         {% if clev and clev.sign %}
-                            {{ data.get('io_obs_' + item) }}
+                            {{ data.get('io_obs_' + item) or empty }}
                         {% else %}
                             <input type="text" name="io_obs_{{ item }}"
-                                value="{{ data.get('io_obs_' + item, empty) }}">
+                                value="{{ data.get('io_obs_' + item) or empty }}">
                         {% endif %}
                     </div>
                 </div>
@@ -321,9 +322,9 @@
         <div class="--section-title">descripción de procedimiento</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('procedimiento', empty) }}
+                {{ data.get('procedimiento') or empty }}
             {% else %}
-                <textarea name="procedimiento">{{ data.get('procedimiento', '') }}</textarea>
+                <textarea name="procedimiento">{{ data.get('procedimiento') or '' }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -335,9 +336,9 @@
         <div class="--section-title">diagnóstico</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('diagnostico', empty) }}
+                {{ data.get('diagnostico') or empty }}
             {% else %}
-                <textarea name="diagnostico">{{ data.get('diagnostico', '') }}</textarea>
+                <textarea name="diagnostico">{{ data.get('diagnostico') or '' }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -349,9 +350,9 @@
         <div class="--section-title">plan</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('plan', empty) }}
+                {{ data.get('plan') or empty }}
             {% else %}
-                <textarea name="plan">{{ data.get('plan', '') }}</textarea>
+                <textarea name="plan">{{ data.get('plan') or '' }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -363,9 +364,9 @@
         <div class="--section-title">fórmula</div>
         <div class="--section-content">
             {% if clev and clev.sign %}
-                {{ data.get('formula', empty) }}
+                {{ data.get('formula') or empty }}
             {% else %}
-                <textarea name="formula">{{ data.get('formula', '') }}</textarea>
+                <textarea name="formula">{{ data.get('formula') or '' }}</textarea>
             {% endif %}
         </div>
     </div>
@@ -379,19 +380,15 @@
         $(element).change(func);
     }
 
-    function update_obs(name, enabled, def=null) {
-        let obs = $(`input[name='${name}']`);
-        obs.prop('disabled', !enabled);
-        if (!enabled) obs.val('-');
-        if (enabled && def) obs.val(def);
+    function update_obs (name, enabled) {
+        $(`input[name='${name}']`).prop('disabled', !enabled);
     }
 
     // Update checks in HO
     $('input[type=checkbox][name^=ho_]').each((i, e) => {
         handler(e, () => update_obs(
             $(e).prop('name').replace('ho_', 'ho_obs_'),
-            $(e).prop('checked'),
-            '{{ ho_neg }}'
+            $(e).prop('checked')
         ));
     });
 
