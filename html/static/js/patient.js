@@ -69,9 +69,6 @@ socket.on('response_event', (data) => {
             if (_info_) {
                 clearInterval(_info_);
             }
-            $('.--clev-info .--info-id').html(data['record_id'].replace('clev-',''));
-            $('.--clev-info .--info-time').html(data['time']);
-            $('.--clev-info .--info-user').html(data['user']);
             if (data['sign']) {
                 $('.--clev-info .--info-save').prop('class', '--info-save --save-signed');
             } else if (data['user'] == _user_) {

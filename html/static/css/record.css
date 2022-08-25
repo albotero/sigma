@@ -1,4 +1,66 @@
 @charset "UTF-8";
+.--clev-info {
+  display: flex;
+  justify-content: space-around;
+  width: min(75%, 1024px);
+  height: 30px;
+  margin: 5px auto;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgb(186, 186, 195);
+  color: rgb(22, 34, 85);
+  text-transform: uppercase;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 10pt;
+  font-weight: bold;
+  line-height: 30px;
+}
+.--clev-info .--info-id::before {
+  content: "# ";
+}
+.--clev-info .--info-time::before {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/month.svg");
+  background-size: 16px 16px;
+  background-position: center;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  filter: invert(100%);
+  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
+  margin: 2px 5px -2px 5px;
+}
+.--clev-info .--info-save {
+  width: 15px;
+  height: 15px;
+  margin: 7.5px;
+  border-radius: 50%;
+  border: 1px solid rgb(186, 186, 195);
+  visibility: hidden;
+}
+.--clev-info .--info-save.--save-signed, .--clev-info .--info-save.--save-saved, .--clev-info .--info-save.--save-error {
+  visibility: visible;
+}
+.--clev-info .--info-save.--save-saved {
+  background-color: lime;
+}
+.--clev-info .--info-save.--save-signed {
+  background-color: gold;
+}
+.--clev-info .--info-save.--save-error {
+  background-color: red;
+}
+
+.--record {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
 .--section {
   background-color: rgb(208, 208, 222);
   overflow: hidden;
