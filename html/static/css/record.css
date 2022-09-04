@@ -142,6 +142,9 @@
 .--section .--section-columns-4 {
   grid-template-columns: 17.5% 27.5% 50px 17.5% 27.5% 20px;
 }
+.--section .--section-columns-4b {
+  grid-template-columns: 15% 15% min-content auto 20px;
+}
 .--section .--section-columns-6a {
   grid-template-columns: 15% 15% 50px 15% 15% 50px 15% 15% 20px;
 }

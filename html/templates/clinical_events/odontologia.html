@@ -68,12 +68,12 @@
                         {% for antec_item in antec_list %}
                             <div class="--list-title">{{ antec_item }}</div>
                             {% if clev and clev.sign %}
-                                {{ data.get(section + '_' + antec_item) or empty }}
+                                <div>{{ data.get(section + '_' + antec_item) or empty }}</div>
                             {% else %}
                                 <input type="text" name="{{ section }}_{{ antec_item }}"
                                     value="{{ data.get(section + '_' + antec_item) or antecedentes_neg }}">
-                                <div></div>
                             {% endif %}
+                            <div></div>
                         {% endfor %}
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                         <label>
                             <div class="--list-title">{{ item }}</div>
                             {% if clev and clev.sign %}
-                                {{ 'si' if data.get('ho_' + item) else 'no' }}
+                                <div>{{ 'si' if data.get('ho_' + item) else 'no' }}</div>
                             {% else %}
                                 <input type="checkbox" name="ho_{{ item }}"
                                     {{ 'checked' if data.get('ho_' + item) }}>
@@ -106,7 +106,7 @@
                         <div></div>
                         <div class="--list-title">{{ 'observaciones' if item in ['hemorragia'] else 'complicaciones' }}</div>
                         {% if clev and clev.sign %}
-                            {{ data.get('ho_obs_' + item) or empty }}
+                            <div style="grid-column: 4/7;">{{ data.get('ho_obs_' + item) or empty }}</div>
                         {% else %}
                             <input type="text" name="ho_obs_{{ item }}" style="grid-column: 4/7;"
                                 value="{{ data.get('ho_obs_' + item) or ho_neg }}">
@@ -135,7 +135,7 @@
                         <label>
                             <div class="--list-title">{{ item }}</div>
                             {% if clev and clev.sign %}
-                                {{ 'si' if data.get('tto_previo_' + item) else 'no' }}
+                                <div>{{ 'si' if data.get('tto_previo_' + item) else 'no' }}</div>
                             {% else %}
                                 <input type="checkbox" name="tto_previo_{{ item }}"
                                     {{ 'checked' if data.get('tto_previo_' + item) }}>
@@ -147,7 +147,7 @@
                     {% for item, text in tto_previo_actitud.items() %}
                         <div class="--list-title">{{ text }}</div>
                         {% if clev and clev.sign %}
-                            {{ data.get('tto_previo_' + item) or empty }}
+                            <div style="grid-column: 2/5;">{{ data.get('tto_previo_' + item) or empty }}</div>
                         {% else %}
                             <input type="text" name="tto_previo_{{ item }}" style="grid-column: 2/5;"
                                 value="{{ data.get('tto_previo_' + item) or tto_previo_neg }}">
@@ -286,12 +286,17 @@
                 <div class="--section-title">examen intraoral</div>
                 <div class="--section-content">
                     {% for item in io_list %}
-                        <div class="--section-columns --section-columns-3b">
-                            <div class="--list-title">{{ item }}</div>
-                            <div class="--horizontal">
-                                {% if clev and clev.sign %}
-                                    {{ io_options[ data.get('io_' + item) or 0 ] }}
-                                {% else %}
+                        {% if clev and clev.sign %}
+                            <div class="--section-columns --section-columns-4b">
+                                <div class="--list-title">{{ item }}</div>
+                                <div>{{ io_options[ (data.get('io_' + item, 0) | int) or 0 ] }}</div>
+                                <div class="--list-title">detalle</div>
+                                <div>{{ data.get('io_obs_' + item) or empty }}</div>
+                            </div>
+                        {% else %}
+                            <div class="--section-columns --section-columns-3b">
+                                <div class="--list-title">{{ item }}</div>
+                                <div class="--horizontal">
                                     {% for opt in range(io_options | length) %}
                                         <label>
                                             <input type="radio" name="io_{{ item }}" value="{{ opt }}"
@@ -299,19 +304,19 @@
                                             {{ io_options[opt] }}
                                         </label>
                                     {% endfor %}
-                                {% endif %}
+                                </div>
+                                <div></div>
+                                <div class="--horizontal">
+                                    <div class="--list-title">detalle</div>
+                                    {% if clev and clev.sign %}
+                                        <div>{{ data.get('io_obs_' + item) or empty }}</div>
+                                    {% else %}
+                                        <input type="text" name="io_obs_{{ item }}"
+                                            value="{{ data.get('io_obs_' + item) or empty }}">
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div></div>
-                            <div class="--horizontal">
-                                <div class="--list-title">detalle</div>
-                                {% if clev and clev.sign %}
-                                    {{ data.get('io_obs_' + item) or empty }}
-                                {% else %}
-                                    <input type="text" name="io_obs_{{ item }}"
-                                        value="{{ data.get('io_obs_' + item) or empty }}">
-                                {% endif %}
-                            </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
