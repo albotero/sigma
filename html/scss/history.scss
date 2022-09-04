@@ -36,10 +36,9 @@
                 line-height: 20px;
                 text-align: center;
 
-                &::before {
-                    content: '+';
-                }
+                &::before { content: '+'; }
                 &:hover { background-color: $color2b; }
+                .tooltiptext { margin: -40px 0 0 20px; }
             }
         }
 

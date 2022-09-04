@@ -7,7 +7,9 @@
     <div class="--info-user">{{ clev.user.data['name'] if clev }}</div>
     <div class="--info-time">{{ clev.time if clev }}</div>
     {% if not clev.sign %}
-        <div class="--info-sign" onclick="sign_record('{{ clev.id }}');"></div>
+        <div class="--info-sign tooltip" onclick="sign_record('{{ clev.id }}');">
+            <div class="tooltiptext">Firmar Evento</div>
+        </div>
     {% endif %}
     <div class="--info-save"></div>
 </div>

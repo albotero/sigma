@@ -97,22 +97,11 @@ h2 {
         color: $color1;
         text-align: center;
         border-radius: 6px;
-        padding: 5px;
+        padding: 5px 10px;
         position: fixed;
         z-index: 100;
-        width: 110px;
-        transform: translate(calc(11px - 50%), calc(-26px - 100%));
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: $color-tooltip transparent transparent transparent;
-          }
+        width: max-content;
+        margin: -75px 0 0 40px;
     }
 
     &:not(.disabled):hover .tooltiptext { display: block; }
