@@ -48,7 +48,9 @@ socket.on('response_event', (data) => {
                         <div class="title" onclick="load_history(${ build_filter(p, ['id', 'surname', 'lastname']) })">
                             <div class="name">${ p['surname'] } ${ p['lastname'] }</div>
                             <div class="id">${ p['id'] }</div>
-                            <div class="new-event" onclick="new_record('${p['id']}', 'Evolución Periodoncia')"></div>
+                            <div class="new-event tooltip" onclick="new_record('${p['id']}', 'Evolución Periodoncia')">
+                                <div class="tooltiptext">Agregar nuevo Evento Clínico</div>
+                            </div>
                         </div>`;
                     if (p['events']) {
                         _current_['patient'] = p;

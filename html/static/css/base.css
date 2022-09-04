@@ -78,19 +78,17 @@ h2 {
   display: inline-block;
 }
 .tooltip .tooltiptext {
-  visibility: hidden;
+  display: none;
   background-color: rgb(77, 89, 102);
   box-shadow: 0 1px 4px rgb(255, 255, 255);
   color: rgb(255, 255, 255);
   text-align: center;
   border-radius: 6px;
   padding: 5px;
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: 100;
   width: 110px;
-  bottom: 150%;
-  left: 50%;
-  transform: translateX(-50%);
+  transform: translate(calc(11px - 50%), calc(-26px - 100%));
 }
 .tooltip .tooltiptext::after {
   content: "";
@@ -103,7 +101,7 @@ h2 {
   border-color: rgb(77, 89, 102) transparent transparent transparent;
 }
 .tooltip:not(.disabled):hover .tooltiptext {
-  visibility: visible;
+  display: block;
 }
 
 #message {

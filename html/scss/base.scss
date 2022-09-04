@@ -91,19 +91,17 @@ h2 {
     //border-bottom: 1px dotted black;
 
     .tooltiptext {
-        visibility: hidden;
+        display: none;
         background-color: $color-tooltip;
         box-shadow: 0 1px 4px $color1;
         color: $color1;
         text-align: center;
         border-radius: 6px;
         padding: 5px;
-        position: absolute;
-        z-index: 1;
+        position: fixed;
+        z-index: 100;
         width: 110px;
-        bottom: 150%;
-        left: 50%;
-        transform: translateX(-50%);
+        transform: translate(calc(11px - 50%), calc(-26px - 100%));
 
         &::after {
             content: "";
@@ -117,7 +115,7 @@ h2 {
           }
     }
 
-    &:not(.disabled):hover .tooltiptext { visibility: visible; }
+    &:not(.disabled):hover .tooltiptext { display: block; }
 }
 
 #message {
