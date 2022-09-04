@@ -119,3 +119,25 @@ h2 {
 
     &:not(.disabled):hover .tooltiptext { visibility: visible; }
 }
+
+#message {
+    position: fixed;
+    z-index: 300;
+    bottom: 30px;
+    width: min(400px, 50%);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+
+    background-color: $color2d;
+    color: $color1;
+    box-shadow: $color5 1px 3px 6px;
+    
+    .--message-title {
+        font-weight: bold;
+    }
+
+    .--message-body {
+        font-style: italic;
+    }
+}

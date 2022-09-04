@@ -47,6 +47,11 @@ class ClinicalEvent:
         return f'clev-{curr_index + 1:04d}'
 
     def save(self):
+        if not self.sign:
+            Data.save_to_file('clinicalevents', self)
+
+    def sign_event(self, user):
+        self.sign = { 'date': datetime.now().strftime('%-d/%m/%Y %-I:%M %p'), 'user': user }
         Data.save_to_file('clinicalevents', self)
 
     def load(id, fullname=False):
@@ -122,7 +127,8 @@ class History:
         
         # If a patient has been filtered show that patient's history
         if len(self.filtered) == 1:
-            self.patients += [ Patient.load(self.filtered[0][0]).get_dict(*self.filtered[0][1:]) ]
+            patient = self.filtered[0]
+            self.patients += [ Patient.load(patient[0]).get_dict(*patient[1:]) ]
         
         # If there is more than 1 patient filtered only show their names/id
         if len(self.filtered) > 1:

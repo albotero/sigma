@@ -7,8 +7,8 @@
   margin: 5px auto;
   padding: 15px;
   border-radius: 10px;
-  background-color: rgb(186, 186, 195);
-  color: rgb(22, 34, 85);
+  background-color: rgb(88, 88, 90);
+  color: rgb(255, 255, 255);
   text-transform: uppercase;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 10pt;
@@ -28,13 +28,12 @@
   width: 16px;
   height: 16px;
   filter: invert(100%);
-  filter: invert(10%) sepia(49%) saturate(3175%) hue-rotate(220deg) brightness(95%) contrast(96%);
   margin: 2px 5px -2px 5px;
 }
 .--clev-info .--info-save {
   width: 15px;
   height: 15px;
-  margin: 7.5px;
+  margin: 7px;
   border-radius: 50%;
   border: 1px solid rgb(186, 186, 195);
   visibility: hidden;
@@ -43,13 +42,38 @@
   visibility: visible;
 }
 .--clev-info .--info-save.--save-saved {
-  background-color: lime;
+  background-color: rgb(10, 213, 10);
 }
 .--clev-info .--info-save.--save-signed {
-  background-color: gold;
+  background-color: rgb(99, 96, 78);
 }
 .--clev-info .--info-save.--save-error {
-  background-color: red;
+  background-color: rgb(225, 9, 9);
+}
+.--clev-info .--info-sign {
+  height: 30px;
+  margin: -4px 5px 4px 5px;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.--clev-info .--info-sign::before {
+  content: "";
+  margin: 4px 5px -4px 5px;
+  background-image: url("/static/svg/sign.svg");
+  background-size: 32px 32px;
+  background-position: center;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  filter: invert(100%);
+  margin: -5px 5px 5px 5px;
+}
+.--clev-info .--info-sign:hover {
+  background-color: rgb(140, 140, 146);
+}
+.--clev-info .--info-sign:hover::before {
+  filter: invert(1);
 }
 
 .--record {

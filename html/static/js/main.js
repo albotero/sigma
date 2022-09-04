@@ -1,5 +1,5 @@
 $.extend({
-  confirm: function(titulo, mensaje, texto_si, funcion_si, texto_no, cerrar=true) {
+  confirm: (titulo, mensaje, texto_si, funcion_si, texto_no, cerrar=true) => {
     $('<div></div>').dialog({
       // Remove the closing 'X' from the dialog
       open: function(event, ui) { $('.ui-dialog-titlebar-close').hide(); },
@@ -26,7 +26,7 @@ $.extend({
 });
 
 $.extend({
-  alert: function(titulo, mensaje, texto_ok) {
+  alert: (titulo, mensaje, texto_ok) => {
     $('<div></div>').dialog({
       // Remove the closing 'X' from the dialog
       open: function(event, ui) { $('.ui-dialog-titlebar-close').hide(); },
@@ -42,5 +42,19 @@ $.extend({
       title: titulo,
       modal: true
     }).html(mensaje);
+  }
+});
+
+$.extend({
+  message: (message, title = null) => {
+    title = title ? `<div class="--message-title">${title}</div>` : '';
+    $('body').append($(`
+      <div id="message">
+        ${title}
+        <div class="--message-body">${message}</div>
+      </div>`));
+    setTimeout(() => {
+      $('#message').remove()
+    }, 5000);
   }
 });

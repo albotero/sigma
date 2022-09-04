@@ -1,8 +1,14 @@
-<div class="--clev-info">
+{% set data = clev.data if clev else {} %}
+{% set sections = clev.sections if clev else [] %}
+
+        <div class="--clev-info">
     <div class="--info-clev-name">{{ clev.name if clev }}</div>
     <div class="--info-id">{{ clev.id.replace('clev-','') if clev }}</div>
     <div class="--info-user">{{ clev.user.data['name'] if clev }}</div>
     <div class="--info-time">{{ clev.time if clev }}</div>
+    {% if not clev.sign %}
+        <div class="--info-sign" onclick="sign_record('{{ clev.id }}');"></div>
+    {% endif %}
     <div class="--info-save"></div>
 </div>
 
@@ -10,9 +16,7 @@
     <form id="record">
 
         {% set empty = '-' %}
-        {% set data = clev.data if clev else {} %}
-        {% set sections = clev.sections if clev else [] %}
-
+        
         {% if 'mc' in sections %}
             <div class="--section">
                 <div class="--section-title">motivo de consulta</div>

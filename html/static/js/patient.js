@@ -22,7 +22,14 @@ var new_patient = () => socket_event({ 'action': 'new_patient', 'patient': { 'id
 var new_record = (patient_id, record_type) => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type});
 var load_record = (record_id) => socket_event({'action': 'load_record', 'record_id': record_id});
 var save_record = (record_id) => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
-var sign_record = (record_id) => socket_event({'action': 'sign_record', 'record_id': record_id, 'data': getFormData('record') });
+var sign_record = (record_id) => $.confirm(
+    'Firmar historia',
+    `<p>Esta acción no se puede revertir y la historia ya no podrá modificarse más.</p>
+    <p>¿Desea continuar?</p>`,
+    'Firmar',
+    () => socket_event({'action': 'sign_record', 'record_id': record_id, 'data': getFormData('record') }),
+    'Cancelar'
+    );
 
 var _current_ = {};
 var _info_ = null;
@@ -78,7 +85,7 @@ socket.on('response_event', (data) => {
 
         case 'save_record':
             if (data['error']) {
-                console.log('error', data['error']);
+                $.message(data['error'], 'Error al guardar los cambios');
                 $('.--clev-info .--info-save').prop('class', '--info-save --save-error');
             } else {
                 $('.--clev-info .--info-save').prop('class', '--info-save --save-saved');
@@ -86,8 +93,16 @@ socket.on('response_event', (data) => {
             break;
 
         case 'sign_record':
-            alert('firmado: ok');
-            $('.--workarea-content').html(data['html']); // get readonly html
+            if(data['error']) {
+                $.message(data['error'], 'Ocurrió un error al firmar la historia');
+            } else {
+                if (_info_) {
+                    clearInterval(_info_);
+                }
+                $('.--workarea-content').html(data['html']); // get readonly html
+                $('.--clev-info .--info-save').prop('class', '--info-save --save-signed');
+                $.message('Se firmó la historia con éxito');
+            }
             break;
 
         default:
