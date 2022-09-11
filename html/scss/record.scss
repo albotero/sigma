@@ -73,6 +73,7 @@
     width: 92%;
     margin: 3pt auto 20pt auto;
     box-shadow: $color5 2px 2px 10px;
+    position: relative;
 
     * {
         text-transform: uppercase;
@@ -87,6 +88,22 @@
         font-size: 12pt;
         font-weight: 600;
         text-transform: uppercase;
+
+        &.--disabled { background-color: $color2d; }
+    }
+
+    .new-event {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: 15px;
+        top: 19px;
+        transform: translateY(-50%);
+        cursor: pointer;
+
+        &::before { content: ''; }
+        &.--event-add::before { content: '+'; }
+        &.--event-del::before { content: '-'; }
     }
 
     .--section-content {

@@ -1,3 +1,13 @@
+function updateDisabled() {
+    $('.--event-del').prev().removeClass('--disabled');
+    $('.--event-add').prev().addClass('--disabled');
+}
+
+function handler(element, func) {
+    func();
+    $(element).change(func);
+}
+
 function getFormData(form) {
     const json = {};
     $.each($(`#${form}`).serializeArray(), function() {
@@ -14,6 +24,7 @@ var build_filter = (patient, items) => {
     return `{${args.join(', ')}}`;
 };
 
+var record_id;
 var socket = io();
 var socket_event = (data) => socket.emit('socket_event', data);
 
@@ -21,8 +32,8 @@ var load_history = (filter) => socket_event({ 'action': 'load_history', 'filter'
 var new_patient = () => socket_event({ 'action': 'new_patient', 'patient': { 'id': $('#patient input[name=id]').val(), 'surname': $('#patient input[name=surname]').val(), 'lastname': $('#patient input[name=lastname]').val() } });
 var new_record = (patient_id, record_type) => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type});
 var load_record = (record_id) => socket_event({'action': 'load_record', 'record_id': record_id});
-var save_record = (record_id) => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
-var sign_record = (record_id) => $.confirm(
+var save_record = () => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
+var sign_record = () => $.confirm(
     'Firmar historia',
     `<p>Esta acción no se puede revertir y la historia ya no podrá modificarse más.</p>
     <p>¿Desea continuar?</p>`,
@@ -30,6 +41,7 @@ var sign_record = (record_id) => $.confirm(
     () => socket_event({'action': 'sign_record', 'record_id': record_id, 'data': getFormData('record') }),
     'Cancelar'
     );
+var add_del_section = (section_id) =>  socket_event({'action': 'add_del_section', 'record_id': record_id, 'section_id': section_id, 'data': getFormData('record')});
 
 var _current_ = {};
 var _info_ = null;
@@ -72,26 +84,26 @@ socket.on('response_event', (data) => {
 
         case 'new_record':
         case 'load_record':
+        case 'add_del_section':
             // Get form html
             $('.--workarea-content').html(data['html']);
             // Update info
+            record_id = data['record_id'];
             if (_info_) {
                 clearInterval(_info_);
             }
-            if (data['sign']) {
-                $('.--clev-info .--info-save').prop('class', '--info-save --save-signed');
-            } else if (data['user'] == _user_) {
-                _info_ = setInterval(() => save_record(data['record_id']), 5000);
+            if (!data['sign'] && data['user'] == _user_) {
+                _info_ = setInterval(() => save_record(), 5000);
             }
+            updateDisabled()
+            updateInfoSave(data);
             break;
 
         case 'save_record':
             if (data['error']) {
                 $.message(data['error'], 'Error al guardar los cambios');
-                $('.--clev-info .--info-save').prop('class', '--info-save --save-error');
-            } else {
-                $('.--clev-info .--info-save').prop('class', '--info-save --save-saved');
             }
+            updateInfoSave(data);
             break;
 
         case 'sign_record':
@@ -102,12 +114,23 @@ socket.on('response_event', (data) => {
                     clearInterval(_info_);
                 }
                 $('.--workarea-content').html(data['html']); // get readonly html
-                $('.--clev-info .--info-save').prop('class', '--info-save --save-signed');
                 $.message('Se firmó la historia con éxito');
             }
+            updateInfoSave(data);
             break;
 
         default:
             console.log(data);
     }
 });
+
+function updateInfoSave(data) {
+    var clev_status = 'saved';
+    if (data['error']) {
+        clev_status = 'error';
+    } else if (data['sign']) {
+        clev_status = 'signed';
+    }
+    
+    $('.--clev-info .--info-save').prop('class', `--info-save --save-${clev_status}`);
+}

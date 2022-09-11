@@ -109,6 +109,22 @@ def socket_event(data):
             clev = ClinicalEvent.load(data['record_id'], fullname=True)
             clev.data = data['data']
             clev.sign_event(logged_user().id)
+            response['sign'] = clev.sign
+            response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
+
+        if data['action'] == 'add_del_section':
+            clev = ClinicalEvent.load(data['record_id'], fullname=True)
+            clev.data = data['data']
+            
+            if data['section_id'] in clev.sections:
+                clev.sections.remove(data['section_id'])
+            else:
+                clev.sections.append(data['section_id'])
+
+            clev.save()
+            
+            response['record_id'] = clev.id
+            response['user'] = clev.user.id
             response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
             
         emit('response_event', response)

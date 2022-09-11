@@ -28,18 +28,6 @@
             background-color: $color2c;
             font-variant: small-caps;
             font-weight: bold;
-
-            .new-event {
-                border-radius: 3px;
-                width: 20px;
-                height: 20px;
-                line-height: 20px;
-                text-align: center;
-
-                &::before { content: '+'; }
-                &:hover { background-color: $color2b; }
-                .tooltiptext { margin: -40px 0 0 20px; }
-            }
         }
 
         .event {
@@ -74,5 +62,22 @@
                 grid-column: 2/4;
             }
         }
+    }
+}
+
+.new-event {
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: $color1;
+
+    .tooltiptext { margin: -40px 0 0 20px; }
+    &::before { content: '+'; }
+    &:hover {
+        background-color: $color2b;
+        color: $color5;
     }
 }

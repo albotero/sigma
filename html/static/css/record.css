@@ -92,6 +92,7 @@
   width: 92%;
   margin: 3pt auto 20pt auto;
   box-shadow: rgb(7, 15, 33) 2px 2px 10px;
+  position: relative;
 }
 .--section * {
   text-transform: uppercase;
@@ -105,6 +106,27 @@
   font-size: 12pt;
   font-weight: 600;
   text-transform: uppercase;
+}
+.--section .--section-title.--disabled {
+  background-color: rgb(88, 88, 90);
+}
+.--section .new-event {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 15px;
+  top: 19px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.--section .new-event::before {
+  content: "";
+}
+.--section .new-event.--event-add::before {
+  content: "+";
+}
+.--section .new-event.--event-del::before {
+  content: "-";
 }
 .--section .--section-content {
   padding: 10pt 20pt;

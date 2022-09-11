@@ -34,10 +34,7 @@ class ClinicalEvent:
         self.data = {}
 
         self.template = 'odontologia'
-        self.sections = [
-            'mc', 'ea', 'evolucion', 'antecedentes', 'hist_odont', 'tto_previo', 'salud_oral', 'higiene',
-            'examen_clinico', 'perio', 'procedimiento', 'diagnostico', 'plan', 'formula'
-        ]
+        self.sections = []
 
         self.save()
 

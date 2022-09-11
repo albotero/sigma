@@ -27,22 +27,6 @@
   font-variant: small-caps;
   font-weight: bold;
 }
-.--history .--history-patient .title .new-event {
-  border-radius: 3px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-}
-.--history .--history-patient .title .new-event::before {
-  content: "+";
-}
-.--history .--history-patient .title .new-event:hover {
-  background-color: rgb(186, 186, 195);
-}
-.--history .--history-patient .title .new-event .tooltiptext {
-  margin: -40px 0 0 20px;
-}
 .--history .--history-patient .event {
   padding: 3px 0 3px 20px;
   display: grid;
@@ -76,4 +60,24 @@
 }
 .--history .--history-patient .event .user {
   grid-column: 2/4;
+}
+
+.new-event {
+  border-radius: 3px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+.new-event .tooltiptext {
+  margin: -40px 0 0 20px;
+}
+.new-event::before {
+  content: "+";
+}
+.new-event:hover {
+  background-color: rgb(186, 186, 195);
+  color: rgb(7, 15, 33);
 }
