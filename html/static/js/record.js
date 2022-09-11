@@ -29,8 +29,22 @@ var socket = io();
 var socket_event = (data) => socket.emit('socket_event', data);
 
 var load_history = (filter) => socket_event({ 'action': 'load_history', 'filter': filter || getFormData('patient') });
-var new_patient = () => socket_event({ 'action': 'new_patient', 'patient': { 'id': $('#patient input[name=id]').val(), 'surname': $('#patient input[name=surname]').val(), 'lastname': $('#patient input[name=lastname]').val() } });
-var new_record = (patient_id, record_type) => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type});
+var new_patient = () => $.confirm(
+    'Nuevo Paciente',
+    `<p>Se va a crear el paciente ${$('#patient input[name=surname]').val()} ${$('#patient input[name=lastname]').val()}.</p>
+    <p>¿Desea continuar?</p>`,
+    'Crear',
+    () => socket_event({ 'action': 'new_patient', 'patient': { 'id': $('#patient input[name=id]').val(), 'surname': $('#patient input[name=surname]').val(), 'lastname': $('#patient input[name=lastname]').val() } }),
+    'Cancelar'
+    );
+var new_record = (patient_id, record_type) => $.confirm(
+    'Nueva Historia',
+    `<p>Se va a crear un nuevo registro. Esta acción no se puede revertir.</p>
+    <p>¿Desea continuar?</p>`,
+    'Crear',
+    () => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type}),
+    'Cancelar'
+    );
 var load_record = (record_id) => socket_event({'action': 'load_record', 'record_id': record_id});
 var save_record = () => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
 var sign_record = () => $.confirm(
@@ -83,6 +97,8 @@ socket.on('response_event', (data) => {
             break;
 
         case 'new_record':
+            load_history( { 'id': data['patient_id'] } );
+
         case 'load_record':
         case 'add_del_section':
             // Get form html

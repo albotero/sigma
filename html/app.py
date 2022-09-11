@@ -91,6 +91,7 @@ def socket_event(data):
             Patient.load(data['patient_id']).add_event(clev)
             response['record_id'] = clev.id
             response['user'] = clev.user.id
+            response['patient_id'] = data['patient_id']
             response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
 
         if data['action'] == 'load_record':
