@@ -95,7 +95,8 @@ class User:
             'creation': datetime.now().strftime('%Y-%m-%d, %H:%M:%S'),
             'name': data['name'],
             'password': Password.hash_password(data['password']),
-            'roles': data['roles']
+            'roles': data['roles'],
+            'specialty': data['specialty']
         }
         user.save_data()
 

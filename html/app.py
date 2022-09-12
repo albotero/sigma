@@ -81,10 +81,12 @@ def socket_event(data):
         
         if data['action'] == 'load_history':
             response['patients'] = History(data['filter']).patients
+            response['user_specialty'] = logged_user().data['specialty']
 
         if data['action'] == 'new_patient':
             Patient(**data['patient'])
             response['patients'] = History(data['patient']).patients
+            response['user_specialty'] = logged_user().data['specialty']
 
         if data['action'] == 'new_record':
             clev = ClinicalEvent(data['record_type'], logged_user())
