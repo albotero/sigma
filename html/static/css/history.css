@@ -34,7 +34,7 @@
   box-shadow: rgb(7, 15, 33) 0 0 1px;
   color: rgb(22, 34, 85);
 }
-.--history .--history-patient .event:hover {
+.--history .--history-patient .event:hover, .--history .--history-patient .event.--event-selected {
   background-color: rgb(208, 208, 222);
 }
 .--history .--history-patient .event .name {

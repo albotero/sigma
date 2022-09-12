@@ -45,7 +45,11 @@ var new_record = (patient_id, record_type) => $.confirm(
     () => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type}),
     'Cancelar'
     );
-var load_record = (record_id) => socket_event({'action': 'load_record', 'record_id': record_id});
+var load_record = (element, record_id) => {
+    $('.event').removeClass('--event-selected');
+    $(element).addClass('--event-selected');
+    socket_event({'action': 'load_record', 'record_id': record_id});
+};
 var save_record = () => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
 var sign_record = () => $.confirm(
     'Firmar historia',
@@ -82,7 +86,7 @@ socket.on('response_event', (data) => {
                         _current_['patient'] = p;
                         for (e of p['events']) {
                             html += `
-                            <div class="event" onclick="load_record('${e['id']}')">
+                            <div class="event" onclick="load_record(this, '${e['id']}')">
                                 <div class="name">${ e['name'] }</div>
                                 <div class="id">${ e['id'] }</div>
                                 <div class="time">${ e['time'] }</div>

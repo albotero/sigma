@@ -38,7 +38,7 @@
 
             color: $color4;
 
-            &:hover { background-color: $color2; }
+            &:hover, &.--event-selected { background-color: $color2; }
 
             .name {
                 grid-row: 1/3;
