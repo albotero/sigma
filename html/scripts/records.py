@@ -74,18 +74,20 @@ class PatientExistsException(Exception):
 
 class Patient:
     
-    def __init__(self, id, surname, lastname):
+    def __init__(self, data):
         # Only creates patient if not exist
         try:
-            Patient.load(id)
-            raise PatientExistsException(id)
-        except IOError:        
-            self.id = id
+            self.id = f"{data['id-type'].upper()} {data['id-number']}"
+            self.error = None
+            self.data = data
+            Patient.load(self.id)
+            raise PatientExistsException(self.id)
+        except IOError:
             self.events = []
-            self.add_to_index([id, surname, lastname])
+            self.add_to_index([self.id, data['surname'], data['lastname']])
             self.save()
         except PatientExistsException as e:
-            print(f'Error: {e}')
+            self.error = e
 
     def add_to_index(self, data):
         with open(patient_index_path, 'a') as file:

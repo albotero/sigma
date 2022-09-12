@@ -26,6 +26,7 @@
   background-color: rgb(140, 140, 146);
   font-variant: small-caps;
   font-weight: bold;
+  text-transform: capitalize;
 }
 .--history .--history-patient .event {
   padding: 3px 0 3px 20px;

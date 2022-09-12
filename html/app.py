@@ -76,16 +76,19 @@ def dashboard():
 
 @socketio.on('socket_event')
 def socket_event(data):
-    try:
-        response = { 'action': data['action'], 'result': 'ok' }
-        
+    response = { 'action': data['action'], 'result': 'ok' }
+
+    try:        
         if data['action'] == 'load_history':
             response['patients'] = History(data['filter']).patients
             response['user_specialty'] = logged_user().data['specialty']
 
-        if data['action'] == 'new_patient':
-            Patient(**data['patient'])
-            response['patients'] = History(data['patient']).patients
+        if data['action'] == 'save_patient':
+            p = Patient(data['data'])
+            if p.error:
+                raise Exception(p.error)
+            
+            response['patients'] = History({ 'id': p.id }).patients
             response['user_specialty'] = logged_user().data['specialty']
 
         if data['action'] == 'new_record':
@@ -129,7 +132,11 @@ def socket_event(data):
             response['record_id'] = clev.id
             response['user'] = clev.user.id
             response['html'] = render_template(f'clinical_events/{clev.template}.html', clev=clev)
-            
-        emit('response_event', response)
+
+        if data['action'] == 'patient_data_form':
+            response['html'] = render_template(f'patient.html')
+
     except Exception as ex:
-        emit('response_event', {'error': ex})
+        response['error'] = str(ex)
+
+    emit('response_event', response)

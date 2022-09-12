@@ -1,0 +1,138 @@
+<div class="--record">
+    <form id="patient-data" autocomplete="off">
+        <div class="--section">
+            <div class="--section-title">{{ 'editar' if patient else 'crear' }} paciente</div>
+
+            <div class="--section-subtitle">Datos del Paciente</div>
+            
+            <div class="--section-content --section-columns">
+                <div class="--list-title">Documento de identidad</div>
+                <select name="id-type" required>
+                    <option value>--Seleccionar--</option>
+                    {% set opt = {
+                        'cc': 'Cédula de ciudadanía',
+                        'ti': 'Tarjeta de identidad',
+                        'rc': 'Registro civil',
+                        'pas': 'Pasaporte',
+                        'ce': 'Cédula de extranjería',
+                        'ven': 'Venezolano',
+                        'otro': 'Otro'
+                    } %}
+                    {% for key, val in opt.items() %}
+                        <option value="{{ key }}">{{ val }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="id-number" required
+                    value="">
+            </div>
+            
+            <div class="--section-content --section-columns --section-columns-4">
+                <div class="--list-title">Nombres</div>
+                <input type="text" name="surname" required
+                    value="">
+                <div></div>
+                <div class="--list-title">Apellidos</div>
+                <input type="text" name="lastname" required
+                    value="">
+            </div>
+            
+            <div class="--section-content --section-columns --section-columns-4">
+                <div class="--list-title">Fecha de nacimiento</div>
+                <input type="date" name="birthday" required
+                    value="">
+                <div></div>
+                <div class="--list-title">Género</div>
+                <select name="gender">
+                    <option value>--Seleccionar--</option>
+                    {% set opt = {
+                        'male': 'Masculino',
+                        'female': 'Femenino',
+                        'other': 'Otro'
+                    } %}
+                    {% for key, val in opt.items() %}
+                        <option value="{{ key }}">{{ val }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="--section-content --section-columns --section-columns-4">
+                <div class="--list-title">Grupo sanguíneo</div>
+                <select name="gs">
+                    <option value>--Seleccionar--</option>
+                    {% set opt = [ 'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-' ] %}
+                    {% for o in opt %}
+                        <option value="{{ o }}">{{ o }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="--section-subtitle">Información adicional</div>
+            
+            <div class="--section-content --section-columns --section-columns-4">
+                <div class="--list-title">Estado civil</div>
+                <select name="civil">
+                    <option value>--Seleccionar--</option>
+                    {% set opt = {
+                        'ec01': 'Soltero',
+                        'ec02': 'Casado',
+                        'ec03': 'Unión libre',
+                        'ec04': 'Viudo'
+                    } %}
+                    {% for key, val in opt.items() %}
+                        <option value="{{ key }}">{{ val }}</option>
+                    {% endfor %}
+                </select>
+                <div></div>
+                <div class="--list-title">Ocupación</div>
+                <input type="text" name="profession"
+                    value="">
+            </div>
+            
+            <div class="--section-content --section-columns --section-columns-4">
+                <div class="--list-title">Afiliación a Salud</div>
+                <select name="afiliacion">
+                    <option value>--Seleccionar--</option>
+                    {% set opt = {
+                        'af01': 'Particular',
+                        'af02': 'Cotizante',
+                        'af03': 'Beneficiario',
+                        'af04': 'Póliza / Prepagada',
+                        'af05': 'Subsidiado',
+                        'af06': 'No afiliado'
+                    } %}
+                    {% for key, val in opt.items() %}
+                        <option value="{{ key }}">{{ val }}</option>
+                    {% endfor %}
+                </select>
+                <div></div>
+                <div class="--list-title">Aseguradora</div>
+                <input type="text" name="eps"
+                    value="">
+            </div>
+
+            <div class="--section-subtitle">Contacto</div>
+            
+            <div class="--section-content --section-columns --section-columns-4">
+                {% set opt = {
+                    'tel1': 'Teléfono 1',
+                    'tel2': 'Teléfono 2',
+                    'mail1': 'E-mail 1',
+                    'mail2': 'E-mail 2',
+                    'addr': 'Dirección',
+                    'city': 'Ciudad',
+                } %}
+                {% for key, val in opt.items() %}
+                    <div class="--list-title">{{ val }}</div>
+                    <input type="text" name="{{ key }}"
+                        value="">
+                    <div></div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="buttons">
+            <input type="button" value="Guardar" class="ok" onclick="savePatientData();">
+            <input type="button" value="Cancelar" class="cancel" onclick="cancelPatientData();">
+        </div>
+    </form>
+</div>

@@ -29,14 +29,31 @@ var socket = io();
 var socket_event = (data) => socket.emit('socket_event', data);
 
 var load_history = (filter) => socket_event({ 'action': 'load_history', 'filter': filter || getFormData('patient') });
-var new_patient = () => $.confirm(
-    'Nuevo Paciente',
-    `<p>Se va a crear el paciente ${$('#patient input[name=surname]').val()} ${$('#patient input[name=lastname]').val()}.</p>
+
+var new_patient = () => socket_event({ 'action': 'patient_data_form' });
+
+var cancelPatientData = () => $.confirm(
+    'Cancelar',
+    `<p>Si cancela el formulario perderá todos los datos que no se hayan guardado.</p>
     <p>¿Desea continuar?</p>`,
-    'Crear',
-    () => socket_event({ 'action': 'new_patient', 'patient': { 'id': $('#patient input[name=id]').val(), 'surname': $('#patient input[name=surname]').val(), 'lastname': $('#patient input[name=lastname]').val() } }),
-    'Cancelar'
-    );
+    'Salir del formulario',
+    () => $('.--workarea-content').html(''),
+    'Continuar editando'
+);
+
+var savePatientData = () => {
+    if ($('#patient-data')[0].reportValidity()) {
+        $.confirm(
+            'Guardar',
+            `<p>Se van a guardar los cambios en la información del paciente.</p>
+            <p>¿Desea continuar?</p>`,
+            'Guardar',
+            () => socket_event({ 'action': 'save_patient', 'data': getFormData('patient-data') }),
+            'Cancelar'
+        );
+    }
+}
+
 var new_record = (patient_id, record_type) => $.confirm(
     'Nueva Historia',
     `<p>Se va a crear un nuevo registro. Esta acción no se puede revertir.</p>
@@ -44,13 +61,16 @@ var new_record = (patient_id, record_type) => $.confirm(
     'Crear',
     () => socket_event({'action': 'new_record', 'patient_id': patient_id, 'record_type': record_type}),
     'Cancelar'
-    );
+);
+
 var load_record = (element, record_id) => {
     $('.event').removeClass('--event-selected');
     $(element).addClass('--event-selected');
     socket_event({'action': 'load_record', 'record_id': record_id});
 };
+
 var save_record = () => socket_event({'action': 'save_record', 'record_id': record_id, 'data': getFormData('record') });
+
 var sign_record = () => $.confirm(
     'Firmar historia',
     `<p>Esta acción no se puede revertir y la historia ya no podrá modificarse más.</p>
@@ -58,7 +78,8 @@ var sign_record = () => $.confirm(
     'Firmar',
     () => socket_event({'action': 'sign_record', 'record_id': record_id, 'data': getFormData('record') }),
     'Cancelar'
-    );
+);
+
 var add_del_section = (section_id) =>  socket_event({'action': 'add_del_section', 'record_id': record_id, 'section_id': section_id, 'data': getFormData('record')});
 
 var _current_ = {};
@@ -66,9 +87,21 @@ var _info_ = null;
 
 socket.on('response_event', (data) => {
     switch (data['action']) {
+
+        case 'patient_data_form':
+            // Get form html
+            $('.--workarea-content').html(data['html']);
+            break;
+
+        case 'save_patient': //No break
+            if (data['error']) {
+                $.message(data['error'], 'Error al guardar los cambios');
+                break;
+            }
+            $('.--workarea-content').html('');
+            $.message('Datos guardados con éxito.');
         
         case 'load_history':
-        case 'new_patient':
             _current_ = {};
             let html = '';
             if (data['patients']) {
@@ -100,7 +133,7 @@ socket.on('response_event', (data) => {
             $('.--history').html(html);
             break;
 
-        case 'new_record':
+        case 'new_record': //No break
             load_history( { 'id': data['patient_id'] } );
 
         case 'load_record':

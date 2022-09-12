@@ -64,6 +64,17 @@
     right: 0;
     bottom: 0;
     overflow: auto;
+
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+
+        input {
+            margin: 5px 20px;
+            padding: 7px 15px;
+        }
+    }
 }
 
 .--section {
@@ -87,7 +98,6 @@
         padding: 7pt 10pt;
         font-size: 12pt;
         font-weight: 600;
-        text-transform: uppercase;
 
         &.--disabled { background-color: $color2d; }
     }
@@ -104,6 +114,14 @@
         &::before { content: ''; }
         &.--event-add::before { content: '+'; }
         &.--event-del::before { content: '-'; }
+    }
+
+    .--section-subtitle {
+        margin: 15px;
+        text-align: center;
+        font-size: 12pt;
+        font-weight: 600;
+        color: $color4;
     }
 
     .--section-content {

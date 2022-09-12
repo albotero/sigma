@@ -26,7 +26,7 @@ $.extend({
 });
 
 $.extend({
-  alert: (titulo, mensaje, texto_ok) => {
+  alert: (titulo, mensaje, texto_ok = 'Aceptar') => {
     $('<div></div>').dialog({
       // Remove the closing 'X' from the dialog
       open: function(event, ui) { $('.ui-dialog-titlebar-close').hide(); },

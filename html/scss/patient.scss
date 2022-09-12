@@ -17,22 +17,5 @@
         .input-group input[type=text] {
             width: 90%;
         }
-
-        .buttons input[type=button] {
-            border-radius: 7.5px;
-            padding: 7.5px 10px;
-            margin: 0 5px 0 0;
-            background-color: $color2b;
-
-            &:hover {
-                background-color: $color2;
-                cursor: pointer;
-            }
-
-            &:active {
-                background-color: $color3;
-                color: $color1;
-            }
-        }
     }
 }
