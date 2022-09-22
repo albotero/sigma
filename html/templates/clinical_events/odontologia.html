@@ -88,12 +88,12 @@
                 'hipertensión', 'diabetes', 'enf. cardiovasculares', 'enf. respiratorias', 'enf. endocrinas',
                 'cáncer', 'osteoporosis', 'artritis reumatoide', 'epilepsia', 'enf. mentales', 'enf. hemorrágicas',
                 'anomalías congénitas', 'alergias', 'cirugías', 'otros'
-            ],
+            ]} %}
+        {% set fam_temp = {
             'antecedentes familiares': [
                 'hipertensión', 'diabetes', 'enf. cardiovasculares', 'enf. respiratorias', 'enf. endocrinas',
                 'cáncer', 'artritis reumatoide', 'enf. mentales', 'enf. hemorrágicas', 'otros'
-            ]
-            } %}
+            ]} %}
         {% for section, antec_list in antec_dict.items() %}
             {% set show_section = section in clev.sections %}
             {% if not (clev.sign and not show_section) %}
@@ -217,7 +217,7 @@
 
         {% set section = 'salud_oral' %}
         {% set show_section = section in clev.sections %}
-        {% if not (clev.sign and not show_section) %}
+        {% if false and not (clev.sign and not show_section) %}
             {% set salud_oral_list = [
                 'dolor en músculos masticatorios', 'dolor en a.t.m.', 'ruido de a.t.m.',
                 'alteración en el movimiento', 'desarmonías oclusales', 'hábitos',
@@ -289,7 +289,7 @@
 
         {% set section = 'sv' %}
         {% set show_section = section in clev.sections %}
-        {% if not (clev.sign and not show_section) %}
+        {% if false and not (clev.sign and not show_section) %}
             <div class="--section">
                 <div class="--section-title">signos vitales</div>
                 {% if not clev.sign %}
@@ -346,7 +346,7 @@
 
         {% set section = 'examen_clinico' %}
         {% set show_section = section in clev.sections %}
-        {% if not (clev.sign and not show_section) %}
+        {% if false and not (clev.sign and not show_section) %}
             {% set io_options = [ 'no evaluado', 'normal', 'alterado' ] %}
             {% set io_list = [
                 'labios', 'carrillos', 'surco vestibular', 'encía', 'reborde alveolar',
