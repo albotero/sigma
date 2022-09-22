@@ -402,7 +402,7 @@
 
         {% set section = 'perio' %}
         {% set show_section = section in clev.sections %}
-        {% if not (clev.sign and not show_section) and 1==2 %}
+        {% if not (clev.sign and not show_section) %}
             <div class="--section">
                 <div class="--section-title">periodontograma</div>
                 {% if not clev.sign %}
@@ -410,10 +410,10 @@
                         onclick="add_del_section('{{ section }}');"></div>
                 {% endif %}
                 {% if show_section %}
+                    {% set perio_id = clev.data.get('perio_id') or '' %}
                     <div class="--section-content">
-                        {% with perio_id=None %}
-                            {% include 'clinical_events/periodontograma.html' %}
-                        {% endwith %}
+                        <input type="hidden" name="perio_id" value="{{ perio_id }}">
+                        <iframe id="perio"></iframe>
                     </div>
                 {% endif %}
             </div>
@@ -548,5 +548,24 @@
             let map = (nibp[0] * 1 + nibp[1] * 2) / 3;
             $('#map').text((nibp.length == 2 && nibp.every(n => n > 0)) ? map.toFixed(0) : '-');
         });
+    });
+
+    // Update Perio
+    var url = 'http://i-perio.com/sigma'; //'https://127.0.0.1:8889/sigma';
+
+    $.post(url, { 'pid': '{{ perio_id }}' })
+        .done( (perio_id) => {
+            $('input[name=perio_id]').val(perio_id);
+            $('iframe#perio').attr('src', `${url}/${perio_id}`);
+        }
+    );
+
+    window.addEventListener('message', (e) => {
+        var this_frame = $('iframe#perio');
+        if (this_frame[0].contentWindow === e.source) {
+            // console.log("Receiving height as " + e.data.height + "px");
+            this_frame.attr('height', e.data.height + 'px');
+            this_frame.css('height', e.data.height + 'px');
+        }
     });
 </script>

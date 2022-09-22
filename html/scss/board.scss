@@ -6,7 +6,7 @@
     right: 0;
 
     display: grid;
-    grid-template-columns: 25% 10px auto;
+    grid-template-columns: 35% 10px auto;
     grid-template-rows: min(200px, 30%) 10px auto;
     grid-template-areas:
         "patient . workarea"
