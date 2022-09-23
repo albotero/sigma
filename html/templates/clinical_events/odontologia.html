@@ -413,7 +413,7 @@
                     {% set perio_id = clev.data.get('perio_id') or '' %}
                     <div class="--section-content">
                         <input type="hidden" name="perio_id" value="{{ perio_id }}">
-                        <iframe id="perio"></iframe>
+                        <iframe id="perio" scrolling="no"></iframe>
                     </div>
                 {% endif %}
             </div>
@@ -551,8 +551,8 @@
     });
 
     // Update Perio
-    var url = 'http://i-perio.com/sigma'; //'https://127.0.0.1:8889/sigma';
-
+    var url = 'https://i-perio.com/sigma';
+    
     $.post(url, { 'pid': '{{ perio_id }}' })
         .done( (perio_id) => {
             $('input[name=perio_id]').val(perio_id);
