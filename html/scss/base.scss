@@ -155,6 +155,10 @@ h2 {
     html { zoom: 75%; }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1368px) {
     html { zoom: 60%; }
+}
+
+@media (max-width: 1024px) {
+    html { zoom: 50%; }
 }
