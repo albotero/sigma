@@ -139,3 +139,14 @@ h2 {
 #message .--message-body {
   font-style: italic;
 }
+
+@media (max-width: 1920px) {
+  html {
+    zoom: 75%;
+  }
+}
+@media (max-width: 1024px) {
+  html {
+    zoom: 60%;
+  }
+}
