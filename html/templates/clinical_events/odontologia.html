@@ -563,9 +563,9 @@
     window.addEventListener('message', (e) => {
         var this_frame = $('iframe#perio');
         if (this_frame[0].contentWindow === e.source) {
+            let h = e.data.height / $('html').css('zoom');
             // console.log("Receiving height as " + e.data.height + "px");
-            this_frame.attr('height', e.data.height + 'px');
-            this_frame.css('height', e.data.height + 'px');
+            this_frame.css('height', h + 'px');
         }
     });
 </script>
