@@ -140,12 +140,12 @@ h2 {
   font-style: italic;
 }
 
-@media (max-width: 1920px) {
+@media (min-width: 1368px) and (max-width: 1920px) {
   html {
     zoom: 75%;
   }
 }
-@media (max-width: 1368px) {
+@media (min-width: 1025px) and (max-width: 1368px) {
   html {
     zoom: 60%;
   }
